@@ -1,11 +1,37 @@
+/* Navbar */
+
+
+/* Navbar main container */
 nav {
-    padding: .4rem .4rem;
+    padding: .4rem .6rem;
     align-items: center;
     display: flex;
-    justify-content: right;
-    
+    justify-content: flex-end;
 }
 
+/* Classes delcared purely for layout purposes */
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.navbar-left,
+.navbar-center,
+.navbar-right {
+    display: flex;
+    align-items: center;
+}
+
+.navbar-center {
+    flex-grow: 1;
+    justify-content: center;
+}
+
+/* Navbar elements */
+
+/* Button */
 #nav-button {
     margin: 0 10px;
     width: 48px; 
@@ -15,10 +41,17 @@ nav {
     min-width: 0;
     
 }
-
+/* Button child*/
 .nav-button-icon {
     display: flex;
     align-items: center;
     justify-content: center;
 
+}
+
+/* Search bar */
+.search-bar {
+    width: 50%; 
+    max-width: 600px; 
+    min-width: 200px;
 }
