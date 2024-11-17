@@ -6,8 +6,7 @@
   background-color: lightpink;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   word-wrap: break-word;
-  display: flex; /* Changed from inline-block to flex */
-  align-items: center; /* Align items vertically in the center */
+  display: inline-block;
   max-width: 100%;
 }
 

@@ -39,6 +39,7 @@
 .input-container {
   display: flex;
   align-items: center;
+  width: 100%;
 }
 
 .custom-text-field {
@@ -51,4 +52,9 @@
   width: 100%;
   margin-top: 1px;
   margin-left: 1px;
+}
+
+.send-button {
+  margin-left: 8px;
+  background-color: pink;
 }

@@ -1,5 +1,5 @@
 import "./App.css";
-import ChatPromptCard from "./components/cards/ChatPromptCard/ChatPromptCard";
+import AIPromptCard from "./components/cards/AIPromptCard/AIPromptCard";
 import MessageCard from "./components/cards/MessageCard/MessageCard";
 import TextPromptCard from "./components/cards/TextPromptCard/TextPromptCard";
 
@@ -16,7 +16,7 @@ function App() {
         seenById={[]}
       />
       <TextPromptCard />
-      <ChatPromptCard />
+      <AIPromptCard />
     </>
   );
 }
