@@ -28,3 +28,8 @@
   font-size: 12px;
   color: #666;
 }
+
+.message-card.mirrored {
+  border-radius: 10px 10px 10px 0;
+  background-color: grey;
+}
