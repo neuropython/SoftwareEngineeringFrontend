@@ -1,0 +1,54 @@
+.text-prompt-card {
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  padding: 10px;
+  margin: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: box-shadow 0.3s ease;
+  display: flex;
+  align-items: center;
+  display: block;
+}
+
+.text-prompt-card:hover {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.text-prompt-card-title {
+  font-size: 1.5em;
+  margin-bottom: 8px;
+  color: #333;
+}
+
+.text-prompt-card-content {
+  font-size: 1em;
+  color: #666;
+}
+
+.text-prompt-card-footer {
+  margin-top: 16px;
+  text-align: right;
+}
+
+.custom-text-field .MuiOutlinedInput-root {
+  border-radius: 50px;
+  margin: 1px 0;
+}
+
+.input-container {
+  display: flex;
+  align-items: center;
+}
+
+.custom-text-field {
+  flex-grow: 1;
+}
+
+.send-button-container {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  margin-top: 1px;
+  margin-left: 1px;
+}
