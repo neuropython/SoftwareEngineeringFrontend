@@ -15,7 +15,7 @@ interface ChatMessageButtonProps {
 const ChatMessageButton: React.FC<ChatMessageButtonProps> = ({ icon, onClick }) => {
     return (
         <Button
-            className="chat-message-button"
+            id="chat-message-button"
             onClick={onClick}
         >
             {icon}
