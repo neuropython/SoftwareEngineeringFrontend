@@ -1,3 +1,5 @@
+import '../styles/Navbar.css';
+
 import React from 'react';
 import { Button } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
@@ -18,6 +20,7 @@ const NavButton: React.FC<NavButtonProps> = ({ text, icon, onClick, variant = 't
             variant={variant}
             startIcon={icon}
             onClick={onClick}
+            id="nav-button"
         >
             {text}
         </Button>
@@ -37,4 +40,3 @@ const Navbar: React.FC = () => {
 
 
 export default Navbar;
-    

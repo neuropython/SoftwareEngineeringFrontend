@@ -1,0 +1,11 @@
+nav {
+    padding: 1rem 2rem;
+    align-items: center;
+    display: flex;
+    justify-content: right;
+    
+}
+
+#nav-button {
+    margin: 0 10px; 
+}
