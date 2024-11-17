@@ -1,5 +1,5 @@
 nav {
-    padding: 1rem 1rem;
+    padding: .4rem .4rem;
     align-items: center;
     display: flex;
     justify-content: right;
@@ -7,5 +7,18 @@ nav {
 }
 
 #nav-button {
-    margin: 0 10px; 
+    margin: 0 10px;
+    width: 48px; 
+    height: 48px;
+    border-radius: 50%; 
+    overflow: hidden; 
+    min-width: 0;
+    
+}
+
+.nav-button-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
 }

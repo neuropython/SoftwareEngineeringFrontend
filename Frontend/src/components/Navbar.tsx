@@ -9,7 +9,7 @@ import NotificationsIcon from '@mui/icons-material/Notifications';
 import AccountCircle from '@mui/icons-material/AccountCircle';
 
 interface NavButtonProps {
-    text: string;
+    text?: string;
     icon?: React.ReactNode;
     profilePicture?: string; 
     onClick: () => void;
@@ -20,11 +20,14 @@ const NavButton: React.FC<NavButtonProps> = ({ text, icon, onClick, profilePictu
     return (
         <Button
             variant={variant}
-            startIcon={profilePicture ? <img src={profilePicture} alt="Profile" style={{ width: 24, height: 24, borderRadius: '50%' }} /> : icon}
             onClick={onClick}
             id="nav-button"
+
         >
-             {text && text}
+            <span className="nav-button-icon">
+            {profilePicture ? <img src={profilePicture} alt="Profile" style={{ width: 24, height: 24, borderRadius: '50%' }} /> : icon}
+            </span>
+            {text}
         </Button>
     );
 };
@@ -32,11 +35,11 @@ const NavButton: React.FC<NavButtonProps> = ({ text, icon, onClick, profilePictu
 const Navbar: React.FC = () => {
     return (
         <nav>
-            <NavButton text="Home" icon={<HomeIcon />} onClick={() => console.log('Home')} />
-            <NavButton text="Search" icon={<SearchIcon />} onClick={() => console.log('Search')} />
-            <NavButton text="Notifications" icon={<NotificationsIcon />} onClick={() => console.log('Notifications')} />
-            <NavButton text="Settings" icon={<SettingsIcon />} onClick={() => console.log('Settings')} />
-            <NavButton text="Damian" profilePicture='https://avatars.githubusercontent.com/u/128989743?s=96&v=4' onClick={() => console.log('Home')} />
+            <NavButton  icon={<HomeIcon />} onClick={() => console.log('Home')} />
+            <NavButton  icon={<SearchIcon />} onClick={() => console.log('Search')} />
+            <NavButton  icon={<NotificationsIcon />} onClick={() => console.log('Notifications')} />
+            <NavButton  icon={<SettingsIcon />} onClick={() => console.log('Settings')} />
+            <NavButton  profilePicture='https://avatars.githubusercontent.com/u/128989743?s=96&v=4' onClick={() => console.log('Home')} />
         </nav>
     );
 };
