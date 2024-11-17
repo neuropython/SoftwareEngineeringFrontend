@@ -7,7 +7,6 @@ import HomeIcon from '@mui/icons-material/Home';
 import SettingsIcon from '@mui/icons-material/Settings';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import GroupIcon from '@mui/icons-material/Group';
-import AccountCircle from '@mui/icons-material/AccountCircle';
 
 interface NavButtonProps {
     text?: string;
