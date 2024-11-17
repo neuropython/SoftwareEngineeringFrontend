@@ -6,6 +6,7 @@ import SearchIcon from '@mui/icons-material/Search';
 import HomeIcon from '@mui/icons-material/Home';
 import SettingsIcon from '@mui/icons-material/Settings';
 import NotificationsIcon from '@mui/icons-material/Notifications';
+import GroupIcon from '@mui/icons-material/Group';
 import AccountCircle from '@mui/icons-material/AccountCircle';
 
 interface NavButtonProps {
@@ -33,9 +34,11 @@ const NavButton: React.FC<NavButtonProps> = ({ text, icon, onClick, profilePictu
 };
 
 const Navbar: React.FC = () => {
+    const authorized: boolean = true;
     return (
         <nav className="navbar">
             <div className="navbar-left">
+                <NavButton  icon={<GroupIcon />} onClick={() => console.log('Group')} />
                 <NavButton  icon={<HomeIcon />} onClick={() => console.log('Home')} />
             </div>
             <div  className="navbar-center">
