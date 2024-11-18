@@ -1,0 +1,41 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+
+
+.landing-page {
+     display: flex;
+     flex-direction: row;
+     justify-content: left;
+     align-items: center;
+}
+
+.landing-page-carousel {
+     width: 50%;
+     height: 50%;
+     padding: 2rem;
+}
+
+.landing-page-header-text {
+     width: 50%;
+     padding: 2rem;
+     font-family: 'Roboto', sans-serif;
+     align-items: center;
+     margin-left: auto;
+
+     @media screen and (max-width: 1000px) {
+          .landing-page-header-text {
+              width: 100%;
+              text-align: center;
+          }
+      }
+     
+}
+
+.landing-page-header {
+        font-size: 3.5rem;
+        font-weight: 1000;
+}
+
+.landing-page-subheader {
+        font-size: 1.5rem;
+        font-weight: 500;
+}
