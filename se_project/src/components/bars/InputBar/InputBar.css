@@ -1,9 +1,0 @@
-.input-bar {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  flex-wrap: wrap;
-  background-color: white;
-  padding: 10px;
-  width: 200%;
-}
