@@ -24,7 +24,7 @@ const LandingPageCarousel: React.FC<CarouselProps> = ({ images, autoPlay = true,
     return (
         <div className="carousel" >
             {images.map((image, index) => (
-                <Fade  key={index} in={index === currentIndex} timeout={1000}>
+                <Fade  key={index} in={index === currentIndex} timeout={2000}>
                     <img src={image} alt="carousel" style={{ display: index === currentIndex ? 'block' : 'none' }} />
                 </Fade >
             ))}
