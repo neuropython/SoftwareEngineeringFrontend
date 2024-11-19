@@ -1,4 +1,3 @@
-import '../styles/Chat.css';
 import React, { useState, useEffect } from 'react';
 import { Fade , Button } from '@mui/material';
 

@@ -1,12 +1,19 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
 
-
 .landing-page {
+     font-family: 'Roboto', sans-serif;
+     text-align: center;
+}
+
+
+.landing-page-intro {
+     padding-top: 10%;
+     padding-left: 3%;
+     padding-right: 3%;
      display: flex;
      flex-direction: row;
      justify-content: center;
      align-items: center;
-     padding: 1.5rem 3.5rem;
 }
 
 .landing-page-carousel {
@@ -16,8 +23,6 @@
 
 .landing-page-header-text {
      width: 50%;
-     font-family: 'Roboto', sans-serif;
-     text-align: center;
 
      @media screen and (max-width: 1000px) {
           .landing-page-header-text {
@@ -42,7 +47,44 @@
         color: #4f4c4c;
         text-decoration: underline;
         text-decoration-color: #1976D2;
-        text-align: center;
-        
-        
+        text-align: center;        
      }
+
+.landing-page-features {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 1.5rem 3.5rem;
+    @media screen and (max-width: 1000px) {
+        flex-direction: column;
+    }
+}
+
+.landing-page-features > * {
+     padding-top: 20%;
+     padding-bottom: 20%;
+     
+}
+
+.landing-page-features h3 {
+     color: #1976D2; /* Consistent brand color */
+     font-weight: 600;
+ }
+
+ .landing-page-features p {
+     color: #2c3e50; /* Darker, readable text */
+     font-size: 1.1rem;
+     text-align: left;
+ }
+
+ .landing-page-feature .MuiAccordion-root {
+  border: none;
+  box-shadow: none;
+  background-color: transparent;
+}
+
+.landing-page-feature .MuiAccordionSummary-content {
+     text-align: center;
+     justify-content: center;
+   }
+   
