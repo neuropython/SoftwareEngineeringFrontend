@@ -25,7 +25,7 @@ const LandingPage: React.FC = () => {
             )}
             <div className="landing-page-header-text">
                 <img src="https://via.placeholder.com/100" alt="logo" />
-                <h1 className="landing-page-header">CalmSpectrum</h1>
+                <h1 className="landing-page-header">Calm Spectrum</h1>
                 <h2 className="landing-page-subheader">Your mental health companion</h2>
             </div>          
         </div>

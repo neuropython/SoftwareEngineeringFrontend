@@ -6,21 +6,18 @@
      flex-direction: row;
      justify-content: center;
      align-items: center;
-     padding: 0rem 3.5rem;
+     padding: 1.5rem 3.5rem;
 }
 
 .landing-page-carousel {
      width: 50%;
      height: 50%;
-     padding: 2rem;
 }
 
 .landing-page-header-text {
      width: 50%;
-     padding: 2rem;
      font-family: 'Roboto', sans-serif;
-     align-items: center;
-     margin-left: auto;
+     text-align: center;
 
      @media screen and (max-width: 1000px) {
           .landing-page-header-text {
@@ -34,9 +31,18 @@
 .landing-page-header {
         font-size: 3.5rem;
         font-weight: 1000;
+        color: white; 
+        -webkit-text-stroke: 2px #1976D2;
+        margin-bottom: 0rem; 
 }
 
 .landing-page-subheader {
         font-size: 1.5rem;
-        font-weight: 500;
-}
+        font-weight: 1000;
+        color: #4f4c4c;
+        text-decoration: underline;
+        text-decoration-color: #1976D2;
+        text-align: center;
+        
+        
+     }
