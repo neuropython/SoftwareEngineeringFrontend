@@ -1,4 +1,4 @@
-import '../styles/Navbar.css';
+import './Navbar.css';
 
 import React from 'react';
 import { Button, Input} from '@mui/material';
