@@ -1,10 +1,9 @@
 import '../styles/LandingPage.css';
 import React, { useState, useEffect } from 'react';
-import LandingPageCarousel from '../components/LandingPageCarousel';
+import LandingPageCarousel from '../components/landing-page-components/LandingPageCarousel';
 import Accordion from '@mui/material/Accordion';
 import AccordionActions from '@mui/material/AccordionActions';
 import AccordionSummary from '@mui/material/AccordionSummary'
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
 
 const LandingPage: React.FC = () => {
