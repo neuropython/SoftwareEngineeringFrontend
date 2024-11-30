@@ -1,25 +1,28 @@
-import { useState } from 'react'
-import './styles/global.css'
-import  Navbar  from './components/Navbar'
-import  Footer  from './components/Footer'
-import ChatPage from './pages/ChatPage'
-import { Routes, Route } from 'react-router-dom';
-import LandingPage from './pages/LandingPage';
-
+import { useState } from "react";
+import "./styles/global.css";
+import Navbar from "./components/Navbar";
+import Footer from "./components/footer/Footer";
+import ChatPage from "./pages/ChatPage";
+import { Routes, Route } from "react-router-dom";
+import LandingPage from "./pages/LandingPage";
+import LoginPage from "./pages/LoginPage";
+import RegisterPage from "./pages/RegisterPage";
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [count, setCount] = useState(0);
 
   return (
     <div>
-        <Navbar />
-        <Routes>
+      <Navbar />
+      <Routes>
         <Route path="/" element={<LandingPage />} />
         <Route path="/chat" element={<ChatPage />} />
-        </Routes>        
-        < Footer />
+        <Route path="/login" element={<LoginPage />} />
+        <Route path="/register" element={<RegisterPage />} />
+      </Routes>
+      <Footer />
     </div>
-  )
+  );
 }
 
-export default App
+export default App;
