@@ -1,11 +1,12 @@
 .conversation-item {
   display: flex;
   align-items: center;
+  
   padding: 10px;
-  background-color: lightpink;
-  border: 1px solid #ccc;
+  background-color: #F8F9FA;
+  border: 1px solid #1976D2;
   border-radius: 10px;
-  max-width: 100%;
+  max-width: 50%;
   overflow: hidden;
 }
 
@@ -27,7 +28,8 @@
 }
 
 .conversation-item__content__name {
-  font-weight: bold;
+  text-align: left;
+  font-size: 1.5em;
   margin-bottom: 5px;
   white-space: nowrap;
   overflow: hidden;
@@ -39,7 +41,7 @@
   justify-content: space-between;
   align-items: center;
   white-space: nowrap;
-  overflow: hidden;
+  overflow: auto;
   text-overflow: ellipsis;
 }
 
