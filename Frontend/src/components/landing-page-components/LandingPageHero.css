@@ -1,0 +1,38 @@
+.landing-page-features {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 1.5rem 3.5rem;
+    @media screen and (max-width: 1000px) {
+        flex-direction: column;
+    }
+}
+
+.landing-page-features > * {
+     padding-top: 20%;
+     padding-bottom: 20%;
+     
+}
+
+.landing-page-features h3 {
+     color: #1976D2; /* Consistent brand color */
+     font-weight: 600;
+ }
+
+ .landing-page-features p {
+     color: #2c3e50; /* Darker, readable text */
+     font-size: 1.1rem;
+     text-align: left;
+ }
+
+ .landing-page-feature .MuiAccordion-root {
+  border: none;
+  box-shadow: none;
+  background-color: transparent;
+}
+
+.landing-page-feature .MuiAccordionSummary-content {
+     text-align: center;
+     justify-content: center;
+   }
+   
