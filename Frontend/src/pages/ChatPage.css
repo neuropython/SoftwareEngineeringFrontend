@@ -1,0 +1,27 @@
+.chat-page {
+  display: flex;
+  height: 100%;
+}
+
+.conversations-list {
+  width: 25%;
+  border-right: 1px solid #ddd;
+  overflow-y: auto;
+}
+
+.chat-section {
+  width: 75%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.messages-list {
+  flex-grow: 1;
+  overflow-y: auto;
+}
+
+.input-bar {
+  border-top: 1px solid #ddd;
+  padding: 0px;
+}
