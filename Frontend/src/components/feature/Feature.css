@@ -1,0 +1,58 @@
+.features {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 1.5rem 3.5rem;
+    align-items: stretch; /* Stretch all children to the same height */
+    gap: 1rem; /* Add spacing between children */
+    @media screen and (max-width: 1000px) {
+        flex-direction: column;
+    }
+}
+
+.features > .feature {
+    flex: 1; /* Allow equal space for each feature */
+    display: flex;
+    flex-direction: column; /* Stack content vertically */
+    align-items: center;
+    justify-content: space-between; /* Distribute content evenly */
+    padding: 1rem; /* Add internal padding */
+    box-sizing: border-box; /* Ensure padding doesn't add to width/height */
+}
+
+.feature img {
+    max-width: 100%; /* Make images responsive */
+    height: auto; /* Preserve aspect ratio */
+    margin-bottom: 1rem; /* Space between image and content */
+}
+
+.feature .text-container {
+    width: 100%; /* Match the width of the image */
+    text-align: center; /* Optional: Center-align the text */
+}
+
+.feature .MuiAccordion-root {
+    width: 100%; /* Ensure Accordion spans full width of its container */
+    flex-grow: 1; /* Expand Accordion to occupy available space */
+    display: flex;
+    flex-direction: column;
+    border: none;
+    box-shadow: none;
+    background-color: transparent;
+}
+
+.feature .MuiAccordionSummary-content {
+    justify-content: center;
+    
+}
+
+.features h3 {
+     color: #1976D2; /* Consistent brand color */
+     font-weight: 600;
+ }
+
+ .features p {
+     color: #2c3e50; /* Darker, readable text */
+     font-size: 1.1rem;
+     text-align: left;
+ }
