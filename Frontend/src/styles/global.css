@@ -8,3 +8,11 @@ body {
     font-family: 'Roboto', sans-serif;
     text-align: center;
 }
+
+.fancy-font {
+    font-size: 3.5rem;
+    font-weight: 1000;
+    color: white; 
+    -webkit-text-stroke: 2px #1976D2;
+    margin-bottom: 0rem; 
+}
