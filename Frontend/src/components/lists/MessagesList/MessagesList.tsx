@@ -38,10 +38,10 @@ export default function MessagesList({
 
   return (
     <List
-      height={600}
+      height={800}
       itemCount={messageData.length}
       itemSize={100}
-      width={"70%"}
+      width={"100%"}
     >
       {Row}
     </List>

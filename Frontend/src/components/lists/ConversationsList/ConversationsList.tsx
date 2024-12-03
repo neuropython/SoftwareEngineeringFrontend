@@ -42,10 +42,10 @@ export default function ConversationsList({
 
   return (
     <List
-      height={600}
+      height={900}
       itemCount={conversationData.length}
       itemSize={100}
-      width={"70%"}
+      width={"100%"}
     >
       {Row}
     </List>
