@@ -14,5 +14,6 @@ export default function MessageCard({
     <div className={`message-card ${className}`}>
       <h3>{getMessageDto.content}</h3>
     </div>
+    
   );
 }

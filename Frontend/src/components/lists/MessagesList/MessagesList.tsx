@@ -21,7 +21,7 @@ export default function MessagesList({
     const isSentByUser = messageItem.sentById === userLoggedId;
 
     return (
-      <div
+      <div className="message-list-item"
         style={{
           ...style,
           display: "flex",
