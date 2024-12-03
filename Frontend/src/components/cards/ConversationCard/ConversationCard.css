@@ -1,17 +1,17 @@
 .conversation-item {
   display: flex;
   align-items: center;
-  
   padding: 10px;
   background-color: #F8F9FA;
-  border: 1px solid #1976D2;
+  border: 2px solid #1976D2;
   border-radius: 10px;
-  max-width: 50%;
+  max-width: 100%;
   overflow: hidden;
+  margin: 10px;
 }
 
 .conversation-item__avatar {
-  margin-right: 10px;
+  margin-right: 2px;
 }
 
 .conversation-item__avatar img {
@@ -41,7 +41,6 @@
   justify-content: space-between;
   align-items: center;
   white-space: nowrap;
-  overflow: auto;
   text-overflow: ellipsis;
 }
 
