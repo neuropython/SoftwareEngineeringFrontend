@@ -3,7 +3,7 @@ import MessagesList from "../components/lists/MessagesList/MessagesList";
 import InputBar from "../components/bars/InputBar/InputBar";
 import { useState } from "react";
 import { conversationData, messageData, userLoggedId } from "../mock_data";
-import "./ChatPage.css";
+import "../styles/ChatPage.css";
 
 const ChatPage: React.FC = () => {
   return (
