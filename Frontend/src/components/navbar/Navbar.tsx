@@ -8,6 +8,9 @@ import SettingsIcon from '@mui/icons-material/Settings';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import GroupIcon from '@mui/icons-material/Group';
 
+import { useNavigate } from 'react-router-dom';
+
+
 interface NavButtonProps {
     text?: string;
     icon?: React.ReactNode;
@@ -34,11 +37,12 @@ const NavButton: React.FC<NavButtonProps> = ({ text, icon, onClick, profilePictu
 
 const Navbar: React.FC = () => {
     const authorized: boolean = true;
+    const navigate = useNavigate();
     return (
         <nav className="navbar">
             <div className="navbar-left">
-                <NavButton  icon={<GroupIcon />} onClick={() => console.log('Group')} />
-                <NavButton  icon={<HomeIcon />} onClick={() => console.log('Home')} />
+                <NavButton  icon={<GroupIcon />} onClick={() => navigate('/chat')} />
+                <NavButton  icon={<HomeIcon />} onClick={() => navigate('/')} />
             </div>
             <div  className="navbar-center">
                 <Input placeholder="Search..." className="search-bar" />
