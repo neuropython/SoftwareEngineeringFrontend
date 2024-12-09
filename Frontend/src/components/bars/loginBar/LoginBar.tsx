@@ -1,7 +1,8 @@
-import React from "react";
+import React, {useContext} from "react";
 import { Button } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import './LoginBar.css';
+import { AuthContext } from '../../../../api/AuthContext';
 
 interface LoginButtonProps {
     text: string;
@@ -22,12 +23,27 @@ const LoginButton: React.FC<LoginButtonProps> = ({ text, onClick }) => {
 
 const LoginBar: React.FC = () => {
     const navigate = useNavigate();
+    const authContext = useContext(AuthContext);
+
+    if (!authContext) {
+        return null; 
+    }
+
+    const { isAuthenticated } = authContext;
+
+
+    
     return (
-        <div className="login-bar">
-            <LoginButton text="Login" onClick={() => navigate('/login')} />
-            <LoginButton text="Sign Up" onClick={() => navigate('/register')} />
-        </div>
+        <>
+            {!isAuthenticated && (
+                <div className="login-bar">
+                    <LoginButton text="Login" onClick={() => navigate('/login')} />
+                    <LoginButton text="Sign Up" onClick={() => navigate('/register')} />
+                </div>
+            )}
+        </>
     );
 };
+
 
 export default LoginBar;
