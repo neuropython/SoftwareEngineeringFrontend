@@ -6,7 +6,11 @@ export default function InputBar() {
   return (
     <div className="input-bar">
       <AIPromptCard />
-      <TextPromptCard />
+      <TextPromptCard
+        onSendMessage={function (content: string): void {
+          throw new Error("Function not implemented.");
+        }}
+      />
     </div>
   );
 }

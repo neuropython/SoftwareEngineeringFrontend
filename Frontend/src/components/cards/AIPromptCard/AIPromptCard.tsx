@@ -3,7 +3,6 @@ import { Popover, IconButton } from "@mui/material";
 import { makeStyles } from "@mui/styles";
 import TextPromptCard from "../TextPromptCard/TextPromptCard";
 import RobotIcon from "@mui/icons-material/Android";
-import MessagesList from "../../lists/MessagesList/MessagesList";
 
 const useStyles = makeStyles((theme) => ({
   customIconButton: {
@@ -57,7 +56,11 @@ export default function AIPromptCard() {
         }}
       >
         <div style={{ padding: "16px" }}>
-          <TextPromptCard />
+          <TextPromptCard
+            onSendMessage={function (content: string): void {
+              throw new Error("Function not implemented.");
+            }}
+          />
         </div>
       </Popover>
     </div>

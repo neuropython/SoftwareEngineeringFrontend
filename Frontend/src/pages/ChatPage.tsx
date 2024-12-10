@@ -1,23 +1,44 @@
+// FILE: ChatPage.tsx
+import React, { useState } from "react";
 import ConversationsList from "../components/lists/ConversationsList/ConversationsList";
-import MessagesList from "../components/lists/MessagesList/MessagesList";
-import InputBar from "../components/bars/InputBar/InputBar";
-import { useState } from "react";
-import { conversationData, messageData, userLoggedId } from "../mock_data";
+import { conversationData } from "../mock_data"; // Ensure this data is appropriate
 import "../styles/ChatPage.css";
+import { ChatRoomDto } from "../dto/ChatRoomDto";
+import ChatRoom from "../components/rooms/ChatRoom";
 
-const ChatPage: React.FC = () => {
+interface ChatPageProps {
+  // Define if needed
+}
+
+const ChatPage: React.FC<ChatPageProps> = () => {
+  const userLoggedId = "currentUserId"; // Replace with actual logged-in user ID logic
+  const [selectedConversation, setSelectedConversation] =
+    useState<ChatRoomDto | null>(null);
+
+  const handleSelectConversation = (conversation: ChatRoomDto) => {
+    setSelectedConversation(conversation);
+  };
+
   return (
     <div className="chat-page">
       <div className="conversations-list">
-        <ConversationsList conversationData={conversationData} />
+        <ConversationsList
+          conversationData={conversationData}
+          onSelectConversation={handleSelectConversation}
+          selectedConversationId={selectedConversation?.id}
+        />
       </div>
       <div className="chat-section">
-        <div className="messages-list">
-          <MessagesList messageData={messageData} userLoggedId={userLoggedId} />
-        </div>
-        <div className="input-bar">
-          <InputBar />
-        </div>
+        {selectedConversation ? (
+          <ChatRoom
+            userLoggedId={userLoggedId}
+            conversation={selectedConversation}
+          />
+        ) : (
+          <div className="no-conversation-selected">
+            <h2>Select a conversation to start chatting</h2>
+          </div>
+        )}
       </div>
     </div>
   );

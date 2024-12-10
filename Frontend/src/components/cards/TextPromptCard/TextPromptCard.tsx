@@ -1,20 +1,15 @@
-import { TextField, IconButton } from "@mui/material";
+// FILE: TextPromptCard.tsx
+import { IconButton, TextField } from "@mui/material";
 import SendIcon from "@mui/icons-material/Send";
+import React, { useState } from "react";
 import { makeStyles } from "@mui/styles";
-import "./TextPromptCard.css";
 
-const useStyles = makeStyles((theme) => ({
-  customIconButton: {
-    backgroundColor: "pink",
-    "&:hover": {
-      color: "pink",
-    },
-  },
+interface TextPromptCardProps {
+  onSendMessage: (content: string) => void;
+}
+
+const useStyles = makeStyles(() => ({
   customTextField: {
-    color: "pink",
-    "& .MuiInputBase-root": {
-      color: "black",
-    },
     "& .MuiOutlinedInput-root": {
       "& fieldset": {
         borderColor: "pink",
@@ -30,14 +25,39 @@ const useStyles = makeStyles((theme) => ({
       color: "pink", // Focused label color
     },
   },
+  customIconButton: {
+    color: "pink", // Icon color
+  },
 }));
 
-export default function TextPromptCard() {
+const TextPromptCard: React.FC<TextPromptCardProps> = ({ onSendMessage }) => {
   const classes = useStyles();
+  const [inputValue, setInputValue] = useState<string>("");
+
+  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setInputValue(event.target.value);
+  };
+
+  const handleSendMessage = () => {
+    const trimmedMessage = inputValue.trim();
+    if (trimmedMessage.length === 0) return; // Do not send empty messages
+    onSendMessage(trimmedMessage);
+    setInputValue(""); // Clear input after sending
+  };
+
+  const handleKeyPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === "Enter" && !event.shiftKey) {
+      event.preventDefault();
+      handleSendMessage();
+    }
+  };
 
   return (
     <div className="text-prompt-card">
-      <div className="input-container">
+      <div
+        className="input-container"
+        style={{ display: "flex", alignItems: "center" }}
+      >
         <TextField
           id="outlined-multiline-flexible"
           label="Message"
@@ -45,11 +65,20 @@ export default function TextPromptCard() {
           maxRows={4}
           className={classes.customTextField}
           fullWidth
+          value={inputValue}
+          onChange={handleInputChange}
+          onKeyPress={handleKeyPress}
         />
-        <IconButton className={classes.customIconButton}>
+        <IconButton
+          className={classes.customIconButton}
+          onClick={handleSendMessage}
+          disabled={inputValue.trim().length === 0}
+        >
           <SendIcon />
         </IconButton>
       </div>
     </div>
   );
-}
+};
+
+export default TextPromptCard;
