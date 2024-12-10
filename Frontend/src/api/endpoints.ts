@@ -1,15 +1,15 @@
-const BASE_URL = 'http://localhost:8080';
-
 const ENDPOINTS = {
     AUTH : {
-        LOGIN: `${BASE_URL}/auth/login`,
-        REGISTER: `${BASE_URL}/auth/register`,
+        LOGIN: `api/auth/login`,
+        REGISTER: `api/auth/register`,
     },
     USERS: {
-        ME: `${BASE_URL}/users/me`,
+        ME: `/users/me`,
     },
     CHATS: {
-        ROOM: `${BASE_URL}/chats/room`,
-        MEDIA: `${BASE_URL}/chats/media`,
+        ROOM: `/chats/room`,
+        MEDIA: `/chats/media`,
     }
 };
+
+export default ENDPOINTS;
