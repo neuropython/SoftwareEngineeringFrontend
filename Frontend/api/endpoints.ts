@@ -1,15 +1,15 @@
-const BASE_URL = 'localhost:8080/';
+const BASE_URL = 'http://localhost:8080';
 
 const ENDPOINTS = {
     AUTH : {
-        LOGIN: '/auth/login',
-        REGISTER: '/auth/register',
+        LOGIN: `${BASE_URL}/auth/login`,
+        REGISTER: `${BASE_URL}/auth/register`,
     },
     USERS: {
-        ME: '/users/me',
+        ME: `${BASE_URL}/users/me`,
     },
     CHATS: {
-        ROOM: '/chats/room',
-        MEDIA: '/chats/media',
+        ROOM: `${BASE_URL}/chats/room`,
+        MEDIA: `${BASE_URL}/chats/media`,
     }
 };
