@@ -4,6 +4,8 @@ import { ChatRoomDto } from "../../dto/ChatRoomDto";
 import { GetMessageDto } from "../../dto/MessageDto";
 import MessagesList from "../lists/MessagesList/MessagesList";
 import TextPromptCard from "../cards/TextPromptCard/TextPromptCard";
+import { Input } from "@mui/material";
+import InputBar from "../bars/InputBar/InputBar";
 
 interface ChatRoomProps {
   userLoggedId: string;
@@ -64,7 +66,7 @@ const ChatRoom: React.FC<ChatRoomProps> = ({ userLoggedId, conversation }) => {
         <MessagesList userLoggedId={userLoggedId} messageData={messageData} />
       </div>
       <div style={{ padding: "10px", borderTop: "1px solid #ccc" }}>
-        <TextPromptCard onSendMessage={addMessage} />
+        <InputBar onSendMessage={addMessage} />
       </div>
     </div>
   );
