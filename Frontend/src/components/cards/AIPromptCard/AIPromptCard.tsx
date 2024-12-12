@@ -1,6 +1,5 @@
 // FILE: AIPromptCard.tsx
 import React, { useState } from "react";
-import SmartToy from "@mui/icons-material/SmartToy";
 import {
   IconButton,
   Popover,
@@ -10,12 +9,15 @@ import {
   ListItem,
   ListItemText,
   ListItemButton,
+  Checkbox,
 } from "@mui/material";
 import { makeStyles } from "@mui/styles";
+import RobotIcon from "@mui/icons-material/Android";
 
 interface Message {
+  id: string; // Add an id to uniquely identify each message
   content: string;
-  sender: "User" | "AI";
+  sender: string;
 }
 
 const useStyles = makeStyles({
@@ -37,9 +39,12 @@ const useStyles = makeStyles({
   },
 });
 
-interface AIPromptCardProps {}
+interface AIPromptCardProps {
+  chatRoomMessages: Message[]; // Add this prop
+  // Other props if needed
+}
 
-const AIPromptCard: React.FC<AIPromptCardProps> = () => {
+const AIPromptCard: React.FC<AIPromptCardProps> = ({ chatRoomMessages }) => {
   const classes = useStyles();
 
   const [anchorEl, setAnchorEl] = useState<Element | null>(null);
@@ -53,7 +58,7 @@ const AIPromptCard: React.FC<AIPromptCardProps> = () => {
     // Simulate API call delay
     return new Promise((resolve) => {
       setTimeout(() => {
-        resolve(`Echo: ${userMessage}`);
+        resolve(`Response to: ${userMessage}`);
       }, 1000);
     });
   };
@@ -74,6 +79,7 @@ const AIPromptCard: React.FC<AIPromptCardProps> = () => {
     if (inputMessage.trim() === "") return;
 
     const userMessage: Message = {
+      id: `user-${Date.now()}`,
       content: inputMessage,
       sender: "User",
     };
@@ -84,10 +90,20 @@ const AIPromptCard: React.FC<AIPromptCardProps> = () => {
     // Clear input field
     setInputMessage("");
 
+    // Prepare the prompt including selected messages
+    let prompt = inputMessage;
+    if (selectedMessages.length > 0) {
+      const selectedContent = selectedMessages
+        .map((msg) => `${msg.sender}: ${msg.content}`)
+        .join("\n");
+      prompt = `${selectedContent}\n\nUser: ${inputMessage}`;
+    }
+
     // Get response from LLM model
-    const aiResponseContent = await getLLMResponse(userMessage.content);
+    const aiResponseContent = await getLLMResponse(prompt);
 
     const aiMessage: Message = {
+      id: `ai-${Date.now()}`,
       content: aiResponseContent,
       sender: "AI",
     };
@@ -98,20 +114,16 @@ const AIPromptCard: React.FC<AIPromptCardProps> = () => {
 
   const handleSelectMessages = () => {
     setSelectMode(true);
-    // Logic to populate messages from current chatroom
-    // For demonstration, we'll use mock data
-    const chatroomMessages: Message[] = [
-      { content: "Hello from chatroom!", sender: "User" },
-      { content: "Chatroom message 2", sender: "User" },
-      // Add more messages as needed
-    ];
-    setSelectedMessages(chatroomMessages);
+    // Use the chatRoomMessages prop instead of mock data
+    setSelectedMessages([]); // Reset selected messages when entering select mode
   };
 
   const handleMessageSelect = (message: Message) => {
     // Toggle message selection
-    if (selectedMessages.includes(message)) {
-      setSelectedMessages(selectedMessages.filter((msg) => msg !== message));
+    if (selectedMessages.find((msg) => msg.id === message.id)) {
+      setSelectedMessages(
+        selectedMessages.filter((msg) => msg.id !== message.id)
+      );
     } else {
       setSelectedMessages([...selectedMessages, message]);
     }
@@ -119,8 +131,7 @@ const AIPromptCard: React.FC<AIPromptCardProps> = () => {
 
   const handleDoneSelecting = () => {
     setSelectMode(false);
-    // You can now use selectedMessages array as needed
-    // For example, include them in the prompt to the LLM model
+    // The selectedMessages array now contains the messages selected by the user
   };
 
   const open = Boolean(anchorEl);
@@ -133,7 +144,7 @@ const AIPromptCard: React.FC<AIPromptCardProps> = () => {
         aria-describedby={id}
         onClick={handleClick}
       >
-        <SmartToy />
+        <RobotIcon />
       </IconButton>
       <Popover
         id={id}
@@ -153,12 +164,19 @@ const AIPromptCard: React.FC<AIPromptCardProps> = () => {
           {selectMode ? (
             <>
               <List className={classes.messageList}>
-                {selectedMessages.map((message, index) => (
-                  <ListItem key={index} component="div">
+                {chatRoomMessages.map((message) => (
+                  <ListItem key={message.id} disablePadding>
                     <ListItemButton
                       onClick={() => handleMessageSelect(message)}
-                      selected={selectedMessages.includes(message)}
                     >
+                      <Checkbox
+                        edge="start"
+                        checked={selectedMessages.some(
+                          (msg) => msg.id === message.id
+                        )}
+                        tabIndex={-1}
+                        disableRipple
+                      />
                       <ListItemText
                         primary={message.content}
                         secondary={message.sender}
@@ -178,8 +196,8 @@ const AIPromptCard: React.FC<AIPromptCardProps> = () => {
           ) : (
             <>
               <List className={classes.messageList}>
-                {messages.map((message, index) => (
-                  <ListItem key={index}>
+                {messages.map((message) => (
+                  <ListItem key={message.id}>
                     <ListItemText
                       primary={message.content}
                       secondary={message.sender}

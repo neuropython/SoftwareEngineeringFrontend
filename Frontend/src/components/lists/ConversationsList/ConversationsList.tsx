@@ -34,8 +34,8 @@ const ConversationsList: React.FC<ConversationsListProps> = ({
       {conversationData.map((conversation) => (
         <div
           key={conversation.id}
-          className={`conversation-item ${
-            conversation.id === selectedConversationId ? "active" : ""
+          className={`conversation-item${
+            conversation.id === selectedConversationId ? " active" : ""
           }`}
           onClick={() => onSelectConversation(conversation)}
         >

@@ -1,79 +1,123 @@
-// FILE: TextPromptCard.tsx
-import { IconButton, TextField } from "@mui/material";
+import { IconButton, TextField, Button, Typography } from "@mui/material";
 import SendIcon from "@mui/icons-material/Send";
 import React, { useState } from "react";
 import { makeStyles } from "@mui/styles";
 
 interface TextPromptCardProps {
-  onSendMessage: (content: string) => void;
+  onSendMessage: (content: string, mediaFile?: File) => void;
 }
 
 const useStyles = makeStyles(() => ({
   customTextField: {
-    "& .MuiOutlinedInput-root": {
-      "& fieldset": {
-        borderColor: "pink",
-      },
-      "&:hover fieldset": {
-        borderColor: "pink",
-      },
-      "&.Mui-focused fieldset": {
-        borderColor: "pink",
-      },
-    },
-    "& .MuiInputLabel-root.Mui-focused": {
-      color: "pink", // Focused label color
-    },
+    position: "relative",
   },
-  customIconButton: {
-    color: "pink", // Icon color
+  mediaPreview: {
+    position: "absolute",
+    bottom: "100%",
+    left: 0,
+    width: "100%",
+    backgroundColor: "#f5f5f5",
+    padding: "8px",
+    borderTop: "1px solid #ddd",
+    borderBottom: "1px solid #ddd",
+  },
+  dragOverOverlay: {
+    position: "absolute",
+    top: 0,
+    left: 0,
+    width: "100%",
+    height: "100%",
+    backgroundColor: "rgba(255, 192, 203, 0.3)",
+    border: "2px dashed pink",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    pointerEvents: "none",
   },
 }));
 
 const TextPromptCard: React.FC<TextPromptCardProps> = ({ onSendMessage }) => {
   const classes = useStyles();
   const [inputValue, setInputValue] = useState<string>("");
+  const [mediaFile, setMediaFile] = useState<File | null>(null);
+  const [isDragOver, setIsDragOver] = useState<boolean>(false);
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setInputValue(event.target.value);
   };
 
   const handleSendMessage = () => {
-    const trimmedMessage = inputValue.trim();
-    if (trimmedMessage.length === 0) return; // Do not send empty messages
-    onSendMessage(trimmedMessage);
-    setInputValue(""); // Clear input after sending
-  };
-
-  const handleKeyPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
-    if (event.key === "Enter" && !event.shiftKey) {
-      event.preventDefault();
-      handleSendMessage();
+    if (inputValue.trim() !== "" || mediaFile) {
+      onSendMessage(inputValue, mediaFile || undefined);
+      setInputValue("");
+      setMediaFile(null);
     }
   };
 
+  const handleDrop = (e: React.DragEvent<HTMLDivElement>) => {
+    e.preventDefault();
+    setIsDragOver(false);
+
+    if (e.dataTransfer.files && e.dataTransfer.files.length > 0) {
+      setMediaFile(e.dataTransfer.files[0]);
+      e.dataTransfer.clearData();
+    }
+  };
+
+  const handleDragOver = (e: React.DragEvent<HTMLDivElement>) => {
+    e.preventDefault();
+    setIsDragOver(true);
+  };
+
+  const handleDragLeave = (e: React.DragEvent<HTMLDivElement>) => {
+    e.preventDefault();
+    setIsDragOver(false);
+  };
+
+  const handleRemoveMedia = () => {
+    setMediaFile(null);
+  };
+
   return (
-    <div className="text-prompt-card">
-      <div
-        className="input-container"
-        style={{ display: "flex", alignItems: "center" }}
-      >
+    <div
+      className={classes.customTextField}
+      onDrop={handleDrop}
+      onDragOver={handleDragOver}
+      onDragLeave={handleDragLeave}
+    >
+      {mediaFile && (
+        <div className={classes.mediaPreview}>
+          <Typography variant="body2">
+            Attached file: {mediaFile.name}
+          </Typography>
+          <Button size="small" onClick={handleRemoveMedia}>
+            Remove
+          </Button>
+        </div>
+      )}
+      {isDragOver && (
+        <div className={classes.dragOverOverlay}>
+          <Typography variant="body1">Drop file to attach</Typography>
+        </div>
+      )}
+      <div style={{ display: "flex", alignItems: "center" }}>
         <TextField
-          id="outlined-multiline-flexible"
-          label="Message"
-          multiline
-          maxRows={4}
           className={classes.customTextField}
-          fullWidth
+          variant="outlined"
+          size="small"
+          placeholder="Type your message..."
           value={inputValue}
           onChange={handleInputChange}
-          onKeyPress={handleKeyPress}
+          onKeyPress={(e) => {
+            if (e.key === "Enter" && !e.shiftKey) {
+              e.preventDefault();
+              handleSendMessage();
+            }
+          }}
+          fullWidth
+          multiline
         />
-        <IconButton
-          className={classes.customIconButton}
-          onClick={handleSendMessage}
-          disabled={inputValue.trim().length === 0}
-        >
+        <IconButton onClick={handleSendMessage}>
           <SendIcon />
         </IconButton>
       </div>

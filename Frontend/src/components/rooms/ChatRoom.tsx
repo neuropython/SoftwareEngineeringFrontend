@@ -14,10 +14,21 @@ interface ChatRoomProps {
 
 const ChatRoom: React.FC<ChatRoomProps> = ({ userLoggedId, conversation }) => {
   const [messageData, setMessageData] = useState<GetMessageDto[]>([]);
-  //const socket = useRef<SocketIOClient.Socket | null>(null);
 
-  // Initialize WebSocket connection specific to the conversation
   useEffect(() => {
+    const fetchMessages = async (chatRoomId: string) => {
+      try {
+        const response = await fetch(`/api/chatrooms/${chatRoomId}/messages`);
+        const data: GetMessageDto[] = await response.json();
+        setMessageData(data);
+      } catch (error) {
+        console.error("Failed to fetch messages:", error);
+      }
+    };
+
+    fetchMessages(conversation.id);
+
+    // Initialize WebSocket connection specific to the conversation
     // Replace with your actual WebSocket URL and maybe conversation ID
     //socket.current = io(`ws://your-websocket-url/${conversation.id}`);
     // Listen for incoming messages
@@ -39,17 +50,20 @@ const ChatRoom: React.FC<ChatRoomProps> = ({ userLoggedId, conversation }) => {
   }, [conversation.id]);
 
   // Function to send a new message
-  const addMessage = (content: string) => {
-    const newMessage: GetMessageDto = {
-      id: `${Date.now()}`, // Unique ID
-      sentById: userLoggedId,
-      content: content,
-      sentAt: new Date().toISOString(),
-      chatRoomId: conversation.id,
-      seenById: [],
-      embeddedMedia: [],
-    };
-    setMessageData((prevMessages) => [...prevMessages, newMessage]);
+  const addMessage = (content: string, mediaFile?: File) => {
+    if (mediaFile) {
+    } else {
+      const newMessage: GetMessageDto = {
+        id: `${Date.now()}`, // Unique ID
+        sentById: userLoggedId,
+        content: content,
+        sentAt: new Date().toISOString(),
+        chatRoomId: conversation.id,
+        seenById: [],
+        embeddedMedia: [],
+      };
+      setMessageData((prevMessages) => [...prevMessages, newMessage]);
+    }
 
     // Emit the message to the server
     // if (socket.current) {
@@ -66,7 +80,7 @@ const ChatRoom: React.FC<ChatRoomProps> = ({ userLoggedId, conversation }) => {
         <MessagesList userLoggedId={userLoggedId} messageData={messageData} />
       </div>
       <div style={{ padding: "10px", borderTop: "1px solid #ccc" }}>
-        <InputBar onSendMessage={addMessage} />
+        <InputBar onSendMessage={addMessage} chatRoomMessages={messageData} />
       </div>
     </div>
   );

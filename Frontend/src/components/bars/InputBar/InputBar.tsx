@@ -4,12 +4,14 @@ import "./InputBar.css";
 
 export default function InputBar({
   onSendMessage,
+  chatRoomMessages,
 }: {
   onSendMessage: (content: string) => void;
+  chatRoomMessages: any[];
 }): JSX.Element {
   return (
     <div className="input-bar">
-      <AIPromptCard />
+      <AIPromptCard chatRoomMessages={chatRoomMessages} />
       <TextPromptCard onSendMessage={onSendMessage} />
     </div>
   );
