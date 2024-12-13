@@ -5,8 +5,10 @@ import { Formik } from "formik";
 import { useCallback, useMemo } from "react";
 import * as yup from "yup";
 import { useNavigate } from "react-router-dom";
-import axios, { AxiosInstance } from "axios";
 import { useTranslation } from "react-i18next";
+import loginClient from "../../api/auth/login";
+import { useAuth } from "../../api/AuthContext";
+
 
 type FormValues = {
   username: string;
@@ -18,23 +20,17 @@ function LoginForm() {
 
   const { t } = useTranslation();
   const navigate = useNavigate();
-  //const apiClient = useApi();
+  const { login } = useAuth();
 
   const submit = useCallback(
-    (values: FormValues, formik: any) => {
-      console.log(values);
-      /*apiClient.login(values).then((response) => {
-        if (response.success) {
-          navigate("/home");
-        } else {
-          formik.setFieldError(
-            "password",
-            t("loginPage.invalidUsernameOrPassword")
-          );
-        }
-      });
-      */
+    async (values: FormValues) => {
+      try {
+        login(values.username, values.password);
+      } catch (error) {
+        console.error(error);
+      }
     },
+    
     [navigate, t]
   );
 
@@ -44,8 +40,8 @@ function LoginForm() {
         username: yup.string().required(t("loginPage.usernameCantBeEmpty")),
         password: yup
           .string()
-          .required(t("loginPage.passwordCantBeEmpty"))
-          .min(5, t("loginPage.passwordMustBeAtLeast5Characters")),
+          .required(t("Password cant be empty"))
+          .min(5, t("Password must be at least 5 characters")),
       }),
     [t]
   );
@@ -67,7 +63,7 @@ function LoginForm() {
         >
           <TextField
             id="username"
-            label={t("loginPage.username")}
+            label={t("Username")}
             variant="outlined"
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
@@ -76,7 +72,7 @@ function LoginForm() {
           />
           <TextField
             id="password"
-            label={t("loginPage.password")}
+            label={t("Password")}
             variant="outlined"
             type="password"
             onChange={formik.handleChange}
@@ -97,7 +93,7 @@ function LoginForm() {
             variant="outlined"
             onClick={() => navigate("/register")}
           >
-            {t("loginPage.goToRegister")}
+            {t("Go to register")}
           </Button>
         </form>
       )}
