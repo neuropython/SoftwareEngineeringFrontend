@@ -23,19 +23,10 @@ const LoginButton: React.FC<LoginButtonProps> = ({ text, onClick }) => {
 
 const LoginBar: React.FC = () => {
     const navigate = useNavigate();
-    const authContext = useContext(AuthContext);
-
-    if (!authContext) {
-        return null; 
-    }
-
-    const { isAuthenticated } = authContext;
-
-
-    
+    const isAuth = localStorage.getItem('is_authenticated');
     return (
         <>
-            {!isAuthenticated && (
+            {!isAuth && (
                 <div className="login-bar">
                     <LoginButton text="Login" onClick={() => navigate('/login')} />
                     <LoginButton text="Sign Up" onClick={() => navigate('/register')} />

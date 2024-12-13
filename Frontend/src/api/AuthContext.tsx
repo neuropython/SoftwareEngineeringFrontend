@@ -6,7 +6,6 @@ import { useNavigate } from 'react-router-dom';
 
 
 interface AuthContextType {
-    isAuthenticated: boolean;
     login: (username: string, password: string) => Promise<void>;
     logout: () => void;
     register: (username: string, password: string, email: string) => Promise<void>;
@@ -22,17 +21,20 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     const navigate = useNavigate();
 
     useEffect(() => {
-        const authStatus = localStorage.getItem('is_authenticated') ?? 'false'; 
+        const isAuth = localStorage.getItem('is_authenticated');
+        if (isAuth === 'true') {
+          navigate('/');
+        } else {
+          navigate('/login');
+          localStorage.setItem('is_authenticated', 'false');
+        }
     }, []);
 
     const login = async (username: string, password: string) => {
         const response = await loginClient(username, password);
         if (response.status === 200) {
-
           localStorage.setItem('is_authenticated', 'true');
           navigate('/');
-    
-
         } else {
           throw response;
         }
@@ -54,7 +56,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
 
     return (
-        <AuthContext.Provider value={{ isAuthenticated, login, logout, register }}>
+        <AuthContext.Provider value={{login, logout, register }}>
             {children}
         </AuthContext.Provider>
     );
