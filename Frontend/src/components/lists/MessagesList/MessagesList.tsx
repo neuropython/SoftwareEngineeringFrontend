@@ -1,49 +1,54 @@
-import React from "react";
+// FILE: MessagesList.tsx
+import React, { useCallback } from "react";
 import { FixedSizeList as List } from "react-window";
-import MessageCard from "../../cards/MessageCard/MessageCard";
 import { GetMessageDto } from "../../../dto/MessageDto";
+import MessageCard from "../../cards/MessageCard/MessageCard";
 
-export default function MessagesList({
-  messageData,
-  userLoggedId,
-}: {
-  messageData: GetMessageDto[];
+interface MessagesListProps {
   userLoggedId: string;
-}) {
-  const Row = ({
-    index,
-    style,
-  }: {
-    index: number;
-    style: React.CSSProperties;
-  }) => {
-    const messageItem = messageData[index];
-    const isSentByUser = messageItem.sentById === userLoggedId;
+  messageData: GetMessageDto[];
+}
 
-    return (
-      <div className="message-list-item"
-        style={{
-          ...style,
-          display: "flex",
-          justifyContent: isSentByUser ? "flex-end" : "flex-start",
-        }}
-      >
-        <MessageCard
-          getMessageDto={messageItem}
-          className={isSentByUser ? "" : "mirrored"}
-        />
-      </div>
-    );
-  };
+const MessagesList: React.FC<MessagesListProps> = ({
+  userLoggedId,
+  messageData,
+}) => {
+  // Row component for react-window
+  const Row = useCallback(
+    ({ index, style }: { index: number; style: React.CSSProperties }) => {
+      const messageItem = messageData[index];
+      const isSentByUser = messageItem.sentById === userLoggedId;
+
+      return (
+        <div
+          className="message-list-item"
+          style={{
+            ...style,
+            display: "flex",
+            justifyContent: isSentByUser ? "flex-end" : "flex-start",
+            padding: "5px 10px",
+          }}
+        >
+          <MessageCard
+            getMessageDto={messageItem}
+            className={isSentByUser ? "" : "mirrored"}
+          />
+        </div>
+      );
+    },
+    [messageData, userLoggedId]
+  );
 
   return (
     <List
-      height={800}
+      height={800} // Adjust based on your layout
       itemCount={messageData.length}
-      itemSize={100}
+      itemSize={80} // Adjust based on your MessageCard height
       width={"100%"}
     >
       {Row}
     </List>
   );
-}
+};
+
+export default MessagesList;

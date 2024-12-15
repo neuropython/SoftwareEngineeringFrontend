@@ -1,6 +1,5 @@
-import { useState } from "react";
 import "./styles/global.css";
-import Navbar from "./components/navbar/Navbar";
+import Navbar from "./components/bars/navbar/Navbar";
 import Footer from "./components/footer/Footer";
 import ChatPage from "./pages/ChatPage";
 import { Routes, Route } from "react-router-dom";
@@ -33,5 +32,6 @@ function App() {
       </div>
   );
 }
+
 
 export default App;
