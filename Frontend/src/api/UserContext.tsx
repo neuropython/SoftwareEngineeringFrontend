@@ -3,6 +3,7 @@ import currentUser from "./user/me";
 
 interface UserContextType{
     getUser: () => Promise<void>;
+    logoutUser: () => void;
 }
 
 export const UserContext = createContext<UserContextType | undefined>(undefined);
@@ -24,9 +25,14 @@ export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
         } else {
             throw response;
         }
-    }
+    };
+    const logoutUser = () => {
+        localStorage.removeItem('userId');
+        localStorage.removeItem('userName');
+        localStorage.removeItem('userEmail');
+    };
     return (
-        <UserContext.Provider value={{getUser}}>
+        <UserContext.Provider value={{getUser, logoutUser}}>
             {children}
         </UserContext.Provider>
     );
