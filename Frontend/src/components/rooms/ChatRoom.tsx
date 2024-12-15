@@ -3,9 +3,9 @@ import React, { useState, useEffect, useRef } from "react";
 import { ChatRoomDto } from "../../dto/ChatRoomDto";
 import { GetMessageDto } from "../../dto/MessageDto";
 import MessagesList from "../lists/MessagesList/MessagesList";
-import TextPromptCard from "../cards/TextPromptCard/TextPromptCard";
-import { Input } from "@mui/material";
 import InputBar from "../bars/InputBar/InputBar";
+import io, { Socket } from 'socket.io-client';
+import ENDPOINTS from "../../api/endpoints";
 
 interface ChatRoomProps {
   userLoggedId: string;
@@ -14,6 +14,8 @@ interface ChatRoomProps {
 
 const ChatRoom: React.FC<ChatRoomProps> = ({ userLoggedId, conversation }) => {
   const [messageData, setMessageData] = useState<GetMessageDto[]>([]);
+  const socket = useRef<Socket | null>(null);
+  const authToken = localStorage.getItem("accessToken");
 
   useEffect(() => {
     const fetchMessages = async (chatRoomId: string) => {
@@ -26,27 +28,40 @@ const ChatRoom: React.FC<ChatRoomProps> = ({ userLoggedId, conversation }) => {
       }
     };
 
-    fetchMessages(conversation.id);
+    const connectToRoom = async (chatRoomId: string) => {
+      socket.current = io('ws://api/chats/room49cfd0fb-0f7a-444f-81db-ae837b142b08/connect' , {
+        extraHeaders: {
+          Authorization: `Bearer ${authToken}`
+        }
+      });
+      console.log('Connecting to room:', chatRoomId);
+      console.log('Socket:', socket.current);
+    
+      socket.current.on('connect', () => {
+        console.log('WebSocket Client Connected');
+      });
+    
+      socket.current.on('message', (data) => {
+        const message: GetMessageDto = JSON.parse(data);
+        if (message.chatRoomId === conversation.id) {
+          setMessageData((prevMessages) => [...prevMessages, message]);
+        }
+      });
+    
+      socket.current.on('error', (error) => {
+        console.error('WebSocket error:', error);
+      });
+    
+      socket.current.on('disconnect', () => {
+        console.log('WebSocket connection closed');
+      });
+    };
 
-    // Initialize WebSocket connection specific to the conversation
-    // Replace with your actual WebSocket URL and maybe conversation ID
-    //socket.current = io(`ws://your-websocket-url/${conversation.id}`);
-    // Listen for incoming messages
-    // socket.current.on("newMessage", (message: GetMessageDto) => {
-    //   if (message.chatRoomId === conversation.id) {
-    //     setMessageData((prevMessages) => [...prevMessages, message]);
-    //   }
-    // });
-    // Optionally, fetch initial messages for the selected conversation
-    // fetchMessages(conversation.id).then(initialMessages => {
-    //   setMessageData(initialMessages);
-    // });
-    // Cleanup on unmount or when conversation changes
-    // return () => {
-    //   if (socket.current) {
-    //     socket.current.disconnect();
-    //   }
-    // };
+      
+    //fetchMessages(conversation.id);
+    connectToRoom(conversation.id);
+
+
   }, [conversation.id]);
 
   // Function to send a new message
