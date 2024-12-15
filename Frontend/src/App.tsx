@@ -8,22 +8,29 @@ import LandingPage from "./pages/LandingPage";
 import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
 import AboutPage from "./pages/AboutPage";
+import LoginBar from "./components/bars/loginBar/LoginBar";
+import { AuthProvider } from "./api/AuthContext";
+import { UserProvider } from "./api/UserContext";
+
 
 function App() {
-  const [count, setCount] = useState(0);
 
   return (
-    <div>
-      <Navbar />
-      <Routes>
-        <Route path="/" element={<LandingPage />} />
-        <Route path="/chat" element={<ChatPage />} />
-        <Route path="/login" element={<LoginPage />} />
-        <Route path="/register" element={<RegisterPage />} />
-        <Route path="/about" element={<AboutPage />} /> 
-
-      </Routes>
-    </div>
+      <div>
+        <UserProvider>
+        <AuthProvider>
+        <LoginBar />
+        <Navbar />
+        <Routes>
+          <Route path="/" element={<LandingPage />} />
+          <Route path="/chat" element={<ChatPage />} />
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/register" element={<RegisterPage />} />
+          <Route path="/about" element={<AboutPage />} /> 
+        </Routes>
+        </AuthProvider>
+        </UserProvider>
+      </div>
   );
 }
 
