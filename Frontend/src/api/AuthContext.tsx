@@ -48,6 +48,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
     const logout = () => {
         localStorage.removeItem('is_authenticated');
+        UserInformation?.logoutUser();
     };
 
     const register = async (username: string, password: string, email: string) => {
