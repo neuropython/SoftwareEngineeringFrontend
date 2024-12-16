@@ -4,8 +4,7 @@ import { ChatRoomDto } from "../../dto/ChatRoomDto";
 import { GetMessageDto } from "../../dto/MessageDto";
 import MessagesList from "../lists/MessagesList/MessagesList";
 import InputBar from "../bars/InputBar/InputBar";
-import io, { Socket } from 'socket.io-client';
-import ENDPOINTS from "../../api/endpoints";
+
 
 interface ChatRoomProps {
   userLoggedId: string;
@@ -14,8 +13,8 @@ interface ChatRoomProps {
 
 const ChatRoom: React.FC<ChatRoomProps> = ({ userLoggedId, conversation }) => {
   const [messageData, setMessageData] = useState<GetMessageDto[]>([]);
-  const socket = useRef<Socket | null>(null);
   const authToken = localStorage.getItem("accessToken");
+  const socket = useRef<WebSocket | null>(null);
 
   useEffect(() => {
     const fetchMessages = async (chatRoomId: string) => {
@@ -29,40 +28,49 @@ const ChatRoom: React.FC<ChatRoomProps> = ({ userLoggedId, conversation }) => {
     };
 
     const connectToRoom = async (chatRoomId: string) => {
-      socket.current = io('ws://api/chats/room49cfd0fb-0f7a-444f-81db-ae837b142b08/connect' , {
-        extraHeaders: {
-          Authorization: `Bearer ${authToken}`
-        }
-      });
-      console.log('Connecting to room:', chatRoomId);
-      console.log('Socket:', socket.current);
-    
-      socket.current.on('connect', () => {
-        console.log('WebSocket Client Connected');
-      });
-    
-      socket.current.on('message', (data) => {
-        const message: GetMessageDto = JSON.parse(data);
-        if (message.chatRoomId === conversation.id) {
-          setMessageData((prevMessages) => [...prevMessages, message]);
-        }
-      });
-    
-      socket.current.on('error', (error) => {
-        console.error('WebSocket error:', error);
-      });
-    
-      socket.current.on('disconnect', () => {
-        console.log('WebSocket connection closed');
-      });
-    };
-
+      if (!authToken) {
+        console.error("Auth token is null or undefined");
+        return;
+      }
+      const url = `ws://localhost:8080/connect/room/49cfd0fb-0f7a-444f-81db-ae837b142b08?token=${authToken}`;      
+      console.log('Attempting to connect to WebSocket at:', url);
+      socket.current = new WebSocket(url);
       
-    //fetchMessages(conversation.id);
+
+      socket.current.onopen = () => {
+        console.log('WebSocket connection opened');
+        console.log('Connecting to room:', chatRoomId);
+        console.log('Socket:', socket.current);
+      };
+      
+
+      socket.current.onmessage = (event) => {
+        console.log('Message received:', event.data);
+        try {
+          const data = event.data;
+          console.log('Raw data:', data);
+          const message: GetMessageDto = JSON.parse(data);
+          console.log('Parsed message:', message.data);
+          setMessageData((prevMessages) => [...prevMessages, message.data]);
+        } catch (error) {
+          console.error('Error parsing message:', error);
+        } 
+      };
+
+      socket.current.onerror = (error) => {
+        console.error('WebSocket error:', error);
+      };
+
+      socket.current.onclose = () => {
+        console.log('WebSocket connection closed');
+      };
+    };
     connectToRoom(conversation.id);
 
-
-  }, [conversation.id]);
+    return () => {
+      socket.current?.close();
+    };
+  }, [conversation.id, authToken]);
 
   // Function to send a new message
   const addMessage = (content: string, mediaFile?: File) => {
@@ -79,6 +87,7 @@ const ChatRoom: React.FC<ChatRoomProps> = ({ userLoggedId, conversation }) => {
       };
       setMessageData((prevMessages) => [...prevMessages, newMessage]);
     }
+
 
     // Emit the message to the server
     // if (socket.current) {

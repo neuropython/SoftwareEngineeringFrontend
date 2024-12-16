@@ -12,6 +12,7 @@ interface ChatPageProps {
 
 const ChatPage: React.FC<ChatPageProps> = () => {
   const userLoggedId = localStorage.getItem("userId"); // Replace with actual logged-in user ID logic
+  console.log("Logged in user ID:", userLoggedId);
   const [selectedConversation, setSelectedConversation] =
     useState<ChatRoomDto | null>(null);
 
