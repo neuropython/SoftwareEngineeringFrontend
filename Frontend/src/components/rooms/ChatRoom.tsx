@@ -2,6 +2,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { ChatRoomDto } from "../../dto/ChatRoomDto";
 import { GetMessageDto } from "../../dto/MessageDto";
+import { SendMessageDto } from "../../dto/MessageDto";
 import MessagesList from "../lists/MessagesList/MessagesList";
 import InputBar from "../bars/InputBar/InputBar";
 
@@ -49,9 +50,10 @@ const ChatRoom: React.FC<ChatRoomProps> = ({ userLoggedId, conversation }) => {
         try {
           const data = event.data;
           console.log('Raw data:', data);
-          const message: GetMessageDto = JSON.parse(data);
-          console.log('Parsed message:', message.data);
-          setMessageData((prevMessages) => [...prevMessages, message.data]);
+          const dataObj = JSON.parse(data);
+          const message: GetMessageDto = dataObj["data"];
+          console.log('Parsed message:', message);
+          setMessageData((prevMessages) => [...prevMessages, message]);
         } catch (error) {
           console.error('Error parsing message:', error);
         } 
@@ -76,23 +78,18 @@ const ChatRoom: React.FC<ChatRoomProps> = ({ userLoggedId, conversation }) => {
   const addMessage = (content: string, mediaFile?: File) => {
     if (mediaFile) {
     } else {
-      const newMessage: GetMessageDto = {
-        id: `${Date.now()}`, // Unique ID
-        sentById: userLoggedId,
-        content: content,
-        sentAt: new Date().toISOString(),
-        chatRoomId: conversation.id,
-        seenById: [],
-        embeddedMedia: [],
+      const newMessage: SendMessageDto = {
+        type: "TextMessage",
+        data: {
+          content
+      }
+
       };
-      setMessageData((prevMessages) => [...prevMessages, newMessage]);
+      console.log('Sending message:', newMessage);
+      if (socket.current) {
+        socket.current.send(JSON.stringify(newMessage));
+      }
     }
-
-
-    // Emit the message to the server
-    // if (socket.current) {
-    //   socket.current.emit("sendMessage", newMessage);
-    // }
   };
 
   return (

@@ -16,8 +16,9 @@ const MessagesList: React.FC<MessagesListProps> = ({
   // Row component for react-window
   const Row = useCallback(
     ({ index, style }: { index: number; style: React.CSSProperties }) => {
-      const messageItem = messageData[index];
-      const isSentByUser = messageItem.sentById === userLoggedId;
+      const messageItem: GetMessageDto = messageData[index];
+      console.log("Message item:", messageItem);
+      const isSentByUser = messageItem.sentBy === userLoggedId;
 
       return (
         <div

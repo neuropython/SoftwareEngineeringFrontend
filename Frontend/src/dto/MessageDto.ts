@@ -10,6 +10,7 @@ export class CreateMessageDto {
   seenById: string[] = [];
 }
 
+
 export class GetMessageDto {
   id: string = "";
   content: string = "";
@@ -35,5 +36,18 @@ export class GetMessageDto {
     this.sentById = sentById;
     this.sentAt = sentAt;
     this.seenById = seenById;
+  }
+}
+
+
+export class SendMessageDto {
+  type: string = "TextMessage";
+  data: {
+    content: string;
+  };
+
+  constructor(type: string, content: string) {
+    this.type = type;
+    this.data = { content: content };
   }
 }
