@@ -26,8 +26,11 @@ const MessagesList: React.FC<MessagesListProps> = ({
           style={{
             ...style,
             display: "flex",
+            flexDirection: "row",
             justifyContent: isSentByUser ? "flex-end" : "flex-start",
             padding: "5px 10px",
+            height: "auto",
+            
           }}
         >
           <MessageCard
