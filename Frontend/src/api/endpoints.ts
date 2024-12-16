@@ -1,14 +1,16 @@
+const BASE = 'http://localhost:8080';
+
 const ENDPOINTS = {
     AUTH : {
-        LOGIN: `api/auth/login`,
-        REGISTER: `api/auth/register`,
+        LOGIN: BASE + `/auth/login`,
+        REGISTER: BASE + `/auth/register`,
     },
     USERS: {
-        ME: `api/users/me`,
+        ME: BASE + `/users/me`,
     },
     CHATS: {
-        ROOM: `/chats/room`,
-        MEDIA: `/chats/media`,
+        ROOM: BASE + `/chats/room`,
+        MEDIA: BASE + `/chats/media`,
     }
 };
 
