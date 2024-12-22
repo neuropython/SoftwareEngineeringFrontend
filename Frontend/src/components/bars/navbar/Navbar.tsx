@@ -59,9 +59,7 @@ const Navbar: React.FC = () => {
                 <NavButton  icon={<SearchIcon />} onClick={() => console.log('Search')} />
             </div>
             <div className="navbar-right">
-                <NavButton  icon={<NotificationsIcon />} onClick={() => console.log('Notifications')} />
-                <NavButton  icon={<SettingsIcon />} onClick={() => console.log('Settings')} />
-                <NavButton  profilePicture='https://avatars.githubusercontent.com/u/128989743?s=96&v=4' onClick={() => console.log('Home')} />
+
                 {isAuth == 'true' ? (
                     <NavButton icon={<LogOutIcon />} onClick={() => {
                         localStorage.setItem('is_authenticated', 'false');
