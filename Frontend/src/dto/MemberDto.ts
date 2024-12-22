@@ -1,11 +1,9 @@
 export class CreateMemberDto {
-  userId: string = "";
+  id: string = "";
   role: string = "";
-  nickname: string = "";
 }
 
 export class GetMemberDto {
-  userId: string = "";
+  id: string = "";
   role: string = "";
-  nickname: string = "";
 }
