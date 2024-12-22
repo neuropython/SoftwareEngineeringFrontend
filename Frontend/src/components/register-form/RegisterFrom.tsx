@@ -5,8 +5,9 @@ import { Formik } from "formik";
 import { useCallback, useMemo } from "react";
 import * as yup from "yup";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
 import { useTranslation } from "react-i18next";
+import registerClient from "../../api/auth/register";
+
 
 type FormValues = {
   username: string;
@@ -30,37 +31,36 @@ function RegisterForm() {
   const validationSchema = useMemo(
     () =>
       yup.object({
-        username: yup.string().required(t("registerPage.usernameRequired")),
+        username: yup.string().required(t("Username Required")),
         email: yup
           .string()
-          .email(t("registerPage.invalidEmail"))
-          .required(t("registerPage.emailRequired")),
-        password: yup.string().required(t("registerPage.passwordRequired")),
+          .email(t("Invalid Mail"))
+          .required(t("Email Required")),
+        password: yup.string().required(t("Password Required")),
         confirmPassword: yup
           .string()
           .oneOf(
             [yup.ref("password"), undefined],
-            t("registerPage.passwordsMustMatch")
+            t("Passwords must match")
           )
-          .required(t("registerPage.confirmPasswordRequired")),
+          .required(t("Confirm Password Required")),
       }),
     [t]
   );
 
   const submit = useCallback(
     (values: FormValues, formik: any) => {
-      //   axios
-      //     .post("/api/register", values)
-      //     .then((response) => {
-      //       if (response.data.success) {
-      //         navigate("/home");
-      //       } else {
-      //         formik.setFieldError("email", t("registerPage.registrationFailed"));
-      //       }
-      //     })
-      //     .catch(() => {
-      //       formik.setErrors({ general: t("registerPage.registrationFailed") });
-      //     });
+      registerClient(values.username, values.email, values.password).then(
+        (response) => {
+          if (response.ok) {
+            navigate("/login");
+          } else {
+            response.json().then((data) => {
+              formik.setErrors({ general: data.message });
+            });
+          }
+        }
+      );
       console.log(values);
     },
 
@@ -86,7 +86,7 @@ function RegisterForm() {
             id="username"
             name="username"
             variant="outlined"
-            label={t("registerPage.username")}
+            label={t("Username")}
             value={formik.values.username}
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
@@ -96,7 +96,7 @@ function RegisterForm() {
           <TextField
             id="email"
             name="email"
-            label={t("registerPage.email")}
+            label={t("Email")}
             value={formik.values.email}
             onChange={formik.handleChange}
             error={formik.touched.email && Boolean(formik.errors.email)}
@@ -105,7 +105,7 @@ function RegisterForm() {
           <TextField
             id="password"
             name="password"
-            label={t("registerPage.password")}
+            label={t("Password")}
             type="password"
             value={formik.values.password}
             onChange={formik.handleChange}
@@ -116,7 +116,7 @@ function RegisterForm() {
           <TextField
             id="confirmPassword"
             name="confirmPassword"
-            label={t("registerPage.confirmPassword")}
+            label={t("Confirm Password")}
             type="password"
             value={formik.values.confirmPassword}
             onChange={formik.handleChange}
@@ -139,14 +139,14 @@ function RegisterForm() {
             startIcon={<LoginIcon />}
             disabled={!(formik.isValid && formik.dirty)}
           >
-            {t("registerPage.register")}
+            {t("Register")}
           </Button>
           <Button
             color="secondary"
             variant="outlined"
             onClick={() => navigate("/login")}
           >
-            {t("registerPage.goToLogin")}
+            {t("Login")}
           </Button>
         </form>
       )}
