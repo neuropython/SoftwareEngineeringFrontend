@@ -1,30 +1,46 @@
 // FILE: ChatPage.tsx
-import React, { useState } from "react";
+import React, { useState, useEffect} from "react";
 import ConversationsList from "../components/lists/ConversationsList/ConversationsList";
-import { conversationData } from "../mock_data"; // Ensure this data is appropriate
 import "../styles/ChatPage.css";
 import { ChatRoomDto } from "../dto/ChatRoomDto";
 import ChatRoom from "../components/rooms/ChatRoom";
+import rooms from "../api/chat/rooms";
 
-interface ChatPageProps {
-  // Define if needed
-}
-
-const ChatPage: React.FC<ChatPageProps> = () => {
+const ChatPage = () => {
   const userLoggedId = localStorage.getItem("userId"); // Replace with actual logged-in user ID logic
+  const [chatRooms, setChatRooms] = useState<ChatRoomDto[]>([]);
+  const [selectedConversation, setSelectedConversation] = useState<ChatRoomDto | null>(null);
+
   console.log("Logged in user ID:", userLoggedId);
-  const [selectedConversation, setSelectedConversation] =
-    useState<ChatRoomDto | null>(null);
 
   const handleSelectConversation = (conversation: ChatRoomDto) => {
     setSelectedConversation(conversation);
   };
 
+  const getChatRoomData = async () => {
+    rooms().then((response: Response) => {
+      if (response.ok) {
+        response.json().then((data) => {
+          console.log("Chat room data:", data);
+          const chatRooms: ChatRoomDto[] = data;
+          setChatRooms(chatRooms);
+        });
+      } else {
+        console.error("Failed to fetch chat rooms:", response);
+        return [];
+      }
+    });
+  };
+
+  useEffect(() => {
+    getChatRoomData();
+  }, []);
+
   return (
     <div className="chat-page">
       <div className="conversations-list">
         <ConversationsList
-          conversationData={conversationData}
+          conversationData={chatRooms}
           onSelectConversation={handleSelectConversation}
           selectedConversationId={selectedConversation?.id}
         />
@@ -37,7 +53,7 @@ const ChatPage: React.FC<ChatPageProps> = () => {
           />
         ) : (
           <div className="no-conversation-selected">
-            <h2>Select a conversation to start chatting</h2>
+            Please select a conversation
           </div>
         )}
       </div>
