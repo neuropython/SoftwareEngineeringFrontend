@@ -18,22 +18,14 @@ const ChatRoom: React.FC<ChatRoomProps> = ({ userLoggedId, conversation }) => {
   const socket = useRef<WebSocket | null>(null);
 
   useEffect(() => {
-    const fetchMessages = async (chatRoomId: string) => {
-      try {
-        const response = await fetch(`/api/chatrooms/${chatRoomId}/messages`);
-        const data: GetMessageDto[] = await response.json();
-        setMessageData(data);
-      } catch (error) {
-        console.error("Failed to fetch messages:", error);
-      }
-    };
 
     const connectToRoom = async (chatRoomId: string) => {
       if (!authToken) {
         console.error("Auth token is null or undefined");
         return;
       }
-      const url = `ws://localhost:8080/connect/room/49cfd0fb-0f7a-444f-81db-ae837b142b08?token=${authToken}`;      
+
+      const url = `ws://localhost:8080/connect/room/${chatRoomId}?token=${authToken}`;      
       console.log('Attempting to connect to WebSocket at:', url);
       socket.current = new WebSocket(url);
       
@@ -71,6 +63,8 @@ const ChatRoom: React.FC<ChatRoomProps> = ({ userLoggedId, conversation }) => {
 
     return () => {
       socket.current?.close();
+      setMessageData([]);
+
     };
   }, [conversation.id, authToken]);
 
@@ -100,8 +94,10 @@ const ChatRoom: React.FC<ChatRoomProps> = ({ userLoggedId, conversation }) => {
       <div style={{ flex: 1, overflow: "hidden" }}>
         <MessagesList userLoggedId={userLoggedId} messageData={messageData} />
       </div>
-      <div style={{ padding: "10px", borderTop: "1px solid #ccc" }}>
+      <div>
+      <div className = "inputBar" style={{ padding: "10px" , width: "100%", alignItems: "center", justifyContent: "center", display: "flex"}}>
         <InputBar onSendMessage={addMessage} chatRoomMessages={messageData} />
+        </div>
       </div>
     </div>
   );

@@ -9,7 +9,6 @@
 .conversations-list {
   width: 25%;
   border-right: 1px solid #ddd;
-  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
   position: sticky;
   top: 0;
   left: 0;  
@@ -31,7 +30,6 @@
 }
 
 .input-bar {
-  border-top: 1px solid #ddd;
   height: 20vh;
   width: 80%;
 }
