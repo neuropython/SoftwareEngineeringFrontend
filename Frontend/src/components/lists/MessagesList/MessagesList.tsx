@@ -3,6 +3,7 @@ import React, { useCallback } from "react";
 import { FixedSizeList as List } from "react-window";
 import { GetMessageDto } from "../../../dto/MessageDto";
 import MessageCard from "../../cards/MessageCard/MessageCard";
+import AutoSizer from "react-virtualized-auto-sizer";
 
 interface MessagesListProps {
   userLoggedId: string;
@@ -44,14 +45,18 @@ const MessagesList: React.FC<MessagesListProps> = ({
   );
 
   return (
-    <List
-      height={800} // Adjust based on your layout
-      itemCount={messageData.length}
-      itemSize={80} // Adjust based on your MessageCard height
-      width={"100%"}
-    >
-      {Row}
-    </List>
+    <AutoSizer>
+      {({ height, width }) => (
+        <List
+          height={height}
+          itemCount={messageData.length}
+          itemSize={80}
+          width={width}
+        >
+          {Row}
+        </List>
+      )}
+    </AutoSizer>
   );
 };
 
