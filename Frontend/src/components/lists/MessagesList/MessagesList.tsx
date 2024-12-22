@@ -21,11 +21,11 @@ const MessagesList: React.FC<MessagesListProps> = ({
     const numberOfLines = Math.ceil(messageItem.content.length / 50);
     if (userLoggedId === messageItem.sentBy) {
       if (numberOfLines == 1) return 50;
-      return 10 * (numberOfLines -1) + 50;
+      return 20 * (numberOfLines -1) + 50;
     }
 
     else {if (numberOfLines == 1) return 75;
-    return 10 * (numberOfLines -1) + 75};
+    return 20 * (numberOfLines -1) + 75};
 
     
   }

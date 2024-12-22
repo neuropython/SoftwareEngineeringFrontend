@@ -14,8 +14,8 @@
   left: 0;  
   padding: 16px;
   box-sizing: border-box;
-  overflow-y: auto;                /* Scrollable */
-
+  overflow-y: auto;
+  height: 100vh;
 }
 
 .chat-section {
