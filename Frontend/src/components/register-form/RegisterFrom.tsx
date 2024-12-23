@@ -50,7 +50,7 @@ function RegisterForm() {
 
   const submit = useCallback(
     (values: FormValues, formik: any) => {
-      registerClient(values.username, values.email, values.password).then(
+      registerClient(values.username, values.password, values.email).then(
         (response) => {
           if (response.ok) {
             navigate("/login");
