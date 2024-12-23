@@ -11,8 +11,7 @@ async function CreateNewRoom(chatRoom: string): Promise<void> {
     try {
         const response = await createRoom(chatRoom);
         if (response) {
-            console.log(response);
-            console.log("Damian")
+            window.location.reload();
         }
     } catch (error) {
         console.error('Error creating room:', error);

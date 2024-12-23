@@ -15,6 +15,7 @@
   padding: 16px;
   box-sizing: border-box;
   height: 80vh;
+  overflow-y: auto;
 }
 
 .chat-section {
@@ -32,4 +33,9 @@
 .input-bar {
   height: 20vh;
   width: 80%;
+}
+
+
+.InputChatRoom{
+  
 }

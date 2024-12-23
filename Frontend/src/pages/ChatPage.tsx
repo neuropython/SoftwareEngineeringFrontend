@@ -5,11 +5,15 @@ import "../styles/ChatPage.css";
 import { ChatRoomDto } from "../dto/ChatRoomDto";
 import ChatRoom from "../components/rooms/ChatRoom";
 import rooms from "../api/chat/rooms";
+import CrateNewRoomComponent  from "../components/buttons/CreateNewRoom";
+import { Input } from '@mui/material';
+
 
 const ChatPage = () => {
   const userLoggedId = localStorage.getItem("userId"); // Replace with actual logged-in user ID logic
   const [chatRooms, setChatRooms] = useState<ChatRoomDto[]>([]);
   const [selectedConversation, setSelectedConversation] = useState<ChatRoomDto | null>(null);
+  const [ChatName, setChatName] = useState("");
 
   console.log("Logged in user ID:", userLoggedId);
 
@@ -43,6 +47,16 @@ const ChatPage = () => {
           conversationData={chatRooms}
           onSelectConversation={handleSelectConversation}
           selectedConversationId={selectedConversation?.id}
+        />
+        <Input
+        className="InputChatRoom"
+        type="text"
+        placeholder="GroupName"
+        value={ChatName}
+        onChange={(e) => setChatName(e.target.value)}
+        />
+        <CrateNewRoomComponent
+        chatRoom={ChatName}
         />
       </div>
       <div className="chat-section">
