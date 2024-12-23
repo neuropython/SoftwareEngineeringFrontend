@@ -1,0 +1,9 @@
+.messageListBar {
+    display: flex;
+    justify-content: flex-start;
+    padding: 10px;
+}
+
+.messageListBar  {
+    border-radius: 50%; 
+}
