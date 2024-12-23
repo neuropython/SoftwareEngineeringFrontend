@@ -5,7 +5,7 @@ import { GetMessageDto } from "../../dto/MessageDto";
 import { SendMessageDto } from "../../dto/MessageDto";
 import MessagesList from "../lists/MessagesList/MessagesList";
 import InputBar from "../bars/InputBar/InputBar";
-
+import MessageListBar from "../bars/MessageListBar/MessageListBar"
 
 interface ChatRoomProps {
   userLoggedId: string;
@@ -89,9 +89,10 @@ const ChatRoom: React.FC<ChatRoomProps> = ({ userLoggedId, conversation }) => {
   return (
     <div
       className="chat-room"
-      style={{ display: "flex", flexDirection: "column", height: "100%" }}
+      style={{ display: "flex", flexDirection: "column", height: "100%", overflowX: "hidden"}}
     >
-      <div style={{ flex: 1, overflow: "hidden" }}>
+      <div style={{ flex: 1, overflow: "hidden"}}>
+        <MessageListBar/>
         <MessagesList userLoggedId={userLoggedId} messageData={messageData} />
       </div>
       <div>
