@@ -2,6 +2,7 @@ import '../styles/LandingPage.css';
 import React, { useState, useEffect } from 'react';
 import LandingPageCarousel from '../components/landing-page-components/LandingPageCarousel';
 import Features from '../components/feature/Feature';
+import logo from '../assets/LogoCalmSpectrum.svg';
 
 const featuresData = [
     {
@@ -50,7 +51,7 @@ const LandingPage: React.FC = () => {
                 </div>
             )}
             <div className="landing-page-header-text">
-                <img src="https://via.placeholder.com/100" alt="logo" />
+                <img src={logo} alt="logo" className='logo' />
                 <h1 className="fancy-font">Calm Spectrum</h1>
                 <h2 className="landing-page-subheader">Your mental health companion</h2>
             </div>          
