@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import './CreateNewRoom.css';
 import createRoom from '../../api/chat/createRoom';
 import { Button } from '@mui/material';
 

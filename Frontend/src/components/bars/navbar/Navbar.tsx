@@ -1,14 +1,11 @@
 import './Navbar.css';
 
-import React, {useContext} from "react";
+import React from "react";
 import { Button, Input} from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import HomeIcon from '@mui/icons-material/Home';
-import SettingsIcon from '@mui/icons-material/Settings';
-import NotificationsIcon from '@mui/icons-material/Notifications';
 import LogOutIcon from '@mui/icons-material/Logout';
 import GroupIcon from '@mui/icons-material/Group';
-import { AuthContext } from '../../../api/AuthContext';
 
 import { useNavigate } from 'react-router-dom';
 
