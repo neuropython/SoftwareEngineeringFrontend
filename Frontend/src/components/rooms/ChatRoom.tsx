@@ -17,8 +17,7 @@ const ChatRoom: React.FC<ChatRoomProps> = ({ userLoggedId, conversation }) => {
   const authToken = localStorage.getItem("accessToken");
   const socket = useRef<WebSocket | null>(null);
 
-  useEffect(() => {
-
+  useEffect( () => {
     const connectToRoom = async (chatRoomId: string) => {
       if (!authToken) {
         console.error("Auth token is null or undefined");
@@ -30,7 +29,7 @@ const ChatRoom: React.FC<ChatRoomProps> = ({ userLoggedId, conversation }) => {
       socket.current = new WebSocket(url);
       
 
-      socket.current.onopen = () => {
+      socket.current.onopen = async () => {
         console.log('WebSocket connection opened');
         console.log('Connecting to room:', chatRoomId);
         console.log('Socket:', socket.current);
@@ -41,10 +40,8 @@ const ChatRoom: React.FC<ChatRoomProps> = ({ userLoggedId, conversation }) => {
         console.log('Message received:', event.data);
         try {
           const data = event.data;
-          console.log('Raw data:', data);
           const dataObj = JSON.parse(data);
           const message: GetMessageDto = dataObj["data"];
-          console.log('Parsed message:', message);
           setMessageData((prevMessages) => [...prevMessages, message]);
         } catch (error) {
           console.error('Error parsing message:', error);
@@ -92,7 +89,7 @@ const ChatRoom: React.FC<ChatRoomProps> = ({ userLoggedId, conversation }) => {
       style={{ display: "flex", flexDirection: "column", height: "100%", overflowX: "hidden"}}
     >
       <div style={{ flex: 1, overflow: "hidden"}}>
-        <MessageListBar/>
+        <MessageListBar userId={userLoggedId} roomId={conversation.id}/>
         <MessagesList userLoggedId={userLoggedId} messageData={messageData} />
       </div>
       <div>
