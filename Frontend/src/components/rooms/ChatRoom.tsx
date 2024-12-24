@@ -37,12 +37,16 @@ const ChatRoom: React.FC<ChatRoomProps> = ({ userLoggedId, conversation }) => {
       
 
       socket.current.onmessage = (event) => {
-        console.log('Message received:', event.data);
-        try {
+         try {
           const data = event.data;
           const dataObj = JSON.parse(data);
           const message: GetMessageDto = dataObj["data"];
           setMessageData((prevMessages) => [...prevMessages, message]);
+          const seenMessage = `{"type": "SeenMessage", "data": {"messageId": "${message.id}"}}"`
+          if (socket.current) {
+             socket.current.send(seenMessage)
+          }
+
         } catch (error) {
           console.error('Error parsing message:', error);
         } 
