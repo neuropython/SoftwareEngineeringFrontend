@@ -1,7 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, act } from "react";
 import { Button } from '@mui/material';
 import PersonAddIcon from '@mui/icons-material/PersonAdd';
+import RemoveCircleOutlineIcon from '@mui/icons-material/RemoveCircleOutline';
+import addUserToRoom from "../../../api/chat/addUserToRoom";
+import deleteUserFromRoom from "../../../api/chat/deleteUserFromRoom";
 import room from "../../../api/chat/getRoom";
+import ExitToAppIcon from '@mui/icons-material/ExitToApp';
 
 interface MessageListBarProps {
     roomId: string;
@@ -43,22 +47,57 @@ const MessageListBar: React.FC<MessageListBarProps> = ({ roomId, userId }) => {
     }
 
     else {
-        const handleAddUser = () => {
+        const handleUser = async (action: string) => {
             const userName = window.prompt("Enter the new user's name:");
             if (userName) {
-                console.log(`New user added: ${userName}`);
-                // You can add further logic here to handle the new user
+                let response;
+                switch (action) {
+                    case "del":
+                        response = await deleteUserFromRoom(userName, roomId);
+                        console.log(`User deleted: ${userName}`);
+                        break;
+                    case "add":
+                        response = await addUserToRoom(userName, roomId);
+                        console.log(`New user added: ${userName}`);
+                        break;
+                    default:
+                        console.log(`Unknown action: ${action}`);
+                }
+                
             }
         };
+
+        const leftGroup = async () => {
+            const response = await deleteUserFromRoom(userId, roomId)
+            if (response.success) {
+                console.log('You have left the group')
+        } else {
+            console.log('You have left group')
+        }
+    };
     
         return (
             <nav className="messageListBar">
                 <Button
                     startIcon={<PersonAddIcon />}
-                    onClick={handleAddUser}
+                    onClick={() => {handleUser("add")}}
                 >
                     Add New User
                 </Button>
+
+                <Button
+                    startIcon={<RemoveCircleOutlineIcon />}
+                    onClick={() => {handleUser("del")}}
+                >
+                    Delete User
+                </Button>
+
+                <Button
+                startIcon={<ExitToAppIcon />}
+                onClick={leftGroup}
+            >
+                Leave Group
+            </Button>
             </nav>
         );
     }

@@ -1,9 +1,9 @@
 import ENDPOINTS from "../endpoints";
 
-const addUserToRoom = async (userToAddId: string, roomId: string) => {
+const deleteUserFromRoom = async (userToAddId: string, roomId: string) => {
     
-    const response = await fetch(ENDPOINTS.CHATS.ROOM + '/' + roomId + '/users/add?userId=' + userToAddId, {
-      method: "POST",
+    const response = await fetch(ENDPOINTS.CHATS.ROOM + '/'+ roomId + '/users/' + userToAddId, {
+      method: "DELETE",
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
@@ -12,4 +12,4 @@ const addUserToRoom = async (userToAddId: string, roomId: string) => {
       return response;
   }
   
-  export default addUserToRoom;
+  export default deleteUserFromRoom;
