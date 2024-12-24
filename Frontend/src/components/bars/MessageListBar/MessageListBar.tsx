@@ -70,7 +70,7 @@ const MessageListBar: React.FC<MessageListBarProps> = ({ roomId, userId }) => {
         const leftGroup = async () => {
             const response = await deleteUserFromRoom(userId, roomId)
             if (response.success) {
-                console.log('You have left the group')
+                window.location.reload();
         } else {
             console.log('You have left group')
         }
