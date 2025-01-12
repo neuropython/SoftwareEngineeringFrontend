@@ -43,8 +43,9 @@ const ChatRoom: React.FC<ChatRoomProps> = ({ userLoggedId, conversation }) => {
           const message: GetMessageDto = dataObj["data"];
           setMessageData((prevMessages) => [...prevMessages, message]);
           const seenMessage = `{"type": "SeenMessage", "data": {"messageId": "${message.id}"}}"`
+          const JsonSeenMessage = JSON.parse(seenMessage)
           if (socket.current) {
-             socket.current.send(seenMessage)
+             socket.current.send(JsonSeenMessage)
           }
 
         } catch (error) {
@@ -69,7 +70,6 @@ const ChatRoom: React.FC<ChatRoomProps> = ({ userLoggedId, conversation }) => {
     };
   }, [conversation.id, authToken]);
 
-  // Function to send a new message
   const addMessage = (content: string, mediaFile?: File) => {
     if (mediaFile) {
     } else {
