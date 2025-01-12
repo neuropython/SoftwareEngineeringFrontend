@@ -7,10 +7,15 @@ const ENDPOINTS = {
     },
     USERS: {
         ME: BASE + `/users/me`,
+        USERBYID: BASE + `/users/`,
     },
     CHATS: {
         ROOM: BASE + `/chats/room`,
         MEDIA: BASE + `/chats/media`,
+        MSG_SUMMARY: BASE + `/chats/chat`,
+    },
+    AI: {
+        SUMMARY: BASE + `/summarize_chat`,
     }
 };
 

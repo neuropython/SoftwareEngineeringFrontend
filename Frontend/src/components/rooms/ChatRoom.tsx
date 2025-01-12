@@ -16,7 +16,7 @@ const ChatRoom: React.FC<ChatRoomProps> = ({ userLoggedId, conversation }) => {
   const [messageData, setMessageData] = useState<GetMessageDto[]>([]);
   const authToken = localStorage.getItem("accessToken");
   const socket = useRef<WebSocket | null>(null);
-
+  
   useEffect( () => {
     const connectToRoom = async (chatRoomId: string) => {
       if (!authToken) {

@@ -16,7 +16,7 @@ export class GetMessageDto {
   content: string = "";
   embeddedMedia: EmbeddedMediaDto[] = [];
   chatRoomId: string = "";
-  sentById: string = "";
+  sentBy: string = "";
   sentAt: string = ""; // timestamp
   seenById: string[] = [];
 
@@ -33,7 +33,7 @@ export class GetMessageDto {
     this.content = content;
     this.embeddedMedia = embeddedMedia;
     this.chatRoomId = chatRoomId;
-    this.sentById = sentById;
+    this.sentBy = sentById;
     this.sentAt = sentAt;
     this.seenById = seenById;
   }

@@ -15,7 +15,7 @@ const MessagesList: React.FC<MessagesListProps> = ({
   messageData,
 }) => {
 
-  const getItemSize = index => {
+  const getItemSize = (index: number) => {
     const messageItem: GetMessageDto = messageData[index];
     const numberOfLines = Math.ceil(messageItem.content.length / 50);
     if (userLoggedId === messageItem.sentBy) {
@@ -34,7 +34,6 @@ const MessagesList: React.FC<MessagesListProps> = ({
       const messageItem: GetMessageDto = messageData[index];
       console.log("Message item:", messageItem);
       const isSentByUser = messageItem.sentBy === userLoggedId;
-
       return (
         <div
           className="message-list-item"
@@ -46,13 +45,11 @@ const MessagesList: React.FC<MessagesListProps> = ({
             borderRadius: isSentByUser? "10px 0px 10px 10px" : "0px 10px 10px 10px",
             padding: "5px 10px",
             height: "auto",
-            
           }}
         >
           <MessageCard
             getMessageDto={messageItem}
             isSentByUser={isSentByUser}
-            className={isSentByUser ? "" : "mirrored"}
           />
         </div>
       );
@@ -67,7 +64,7 @@ const MessagesList: React.FC<MessagesListProps> = ({
           height={height}
           itemCount={messageData.length}
           itemSize={getItemSize}
-          width={width}
+          width={width - 30}
         >
           {Row}
         </VariableSizeList>

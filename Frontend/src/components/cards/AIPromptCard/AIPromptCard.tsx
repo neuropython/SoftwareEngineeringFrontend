@@ -15,14 +15,13 @@ import { makeStyles } from "@mui/styles";
 import RobotIcon from "@mui/icons-material/Android";
 
 interface Message {
-  id: string; // Add an id to uniquely identify each message
+  id: string; 
   content: string;
   sender: string;
 }
 
 const useStyles = makeStyles({
   customIconButton: {
-    // Your custom styles here
   },
   messageList: {
     maxHeight: "300px",
@@ -53,9 +52,7 @@ const AIPromptCard: React.FC<AIPromptCardProps> = ({ chatRoomMessages }) => {
   const [selectMode, setSelectMode] = useState(false);
   const [selectedMessages, setSelectedMessages] = useState<Message[]>([]);
 
-  // Mock function to simulate LLM response (replace with actual API call)
   const getLLMResponse = async (userMessage: string): Promise<string> => {
-    // Simulate API call delay
     return new Promise((resolve) => {
       setTimeout(() => {
         resolve(`Response to: ${userMessage}`);
@@ -84,13 +81,10 @@ const AIPromptCard: React.FC<AIPromptCardProps> = ({ chatRoomMessages }) => {
       sender: "User",
     };
 
-    // Add user's message to the conversation
     setMessages((prevMessages) => [...prevMessages, userMessage]);
 
-    // Clear input field
     setInputMessage("");
 
-    // Prepare the prompt including selected messages
     let prompt = inputMessage;
     if (selectedMessages.length > 0) {
       const selectedContent = selectedMessages
@@ -99,7 +93,6 @@ const AIPromptCard: React.FC<AIPromptCardProps> = ({ chatRoomMessages }) => {
       prompt = `${selectedContent}\n\nUser: ${inputMessage}`;
     }
 
-    // Get response from LLM model
     const aiResponseContent = await getLLMResponse(prompt);
 
     const aiMessage: Message = {
@@ -108,14 +101,12 @@ const AIPromptCard: React.FC<AIPromptCardProps> = ({ chatRoomMessages }) => {
       sender: "AI",
     };
 
-    // Add AI's response to the conversation
     setMessages((prevMessages) => [...prevMessages, aiMessage]);
   };
 
   const handleSelectMessages = () => {
     setSelectMode(true);
-    // Use the chatRoomMessages prop instead of mock data
-    setSelectedMessages([]); // Reset selected messages when entering select mode
+    setSelectedMessages([]);
   };
 
   const handleMessageSelect = (message: Message) => {
@@ -131,7 +122,6 @@ const AIPromptCard: React.FC<AIPromptCardProps> = ({ chatRoomMessages }) => {
 
   const handleDoneSelecting = () => {
     setSelectMode(false);
-    // The selectedMessages array now contains the messages selected by the user
   };
 
   const open = Boolean(anchorEl);

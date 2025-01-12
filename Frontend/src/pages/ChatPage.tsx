@@ -7,10 +7,11 @@ import ChatRoom from "../components/rooms/ChatRoom";
 import rooms from "../api/chat/rooms";
 import CrateNewRoomComponent  from "../components/buttons/CreateNewRoom";
 import { Input } from '@mui/material';
+import me from "../api/user/me";
 
 
 const ChatPage = () => {
-  const userLoggedId = localStorage.getItem("userId"); // Replace with actual logged-in user ID logic
+  const [userLoggedId, setUserLoggedId] = useState<string | null>(null);
   const [chatRooms, setChatRooms] = useState<ChatRoomDto[]>([]);
   const [selectedConversation, setSelectedConversation] = useState<ChatRoomDto | null>(null);
   const [ChatName, setChatName] = useState("");
@@ -37,6 +38,18 @@ const ChatPage = () => {
   };
 
   useEffect(() => {
+    const fetchUserId = async () => {
+      const response = await me();
+      if (response.ok) {
+        const data = await response.json();
+        setUserLoggedId(data.id);
+        console.log("Logged in user ID:", data.id);
+      } else {
+        console.error("Failed to fetch user data:", response);
+      }
+    };
+
+    fetchUserId();
     getChatRoomData();
   }, []);
 
