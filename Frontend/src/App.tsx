@@ -1,21 +1,21 @@
 import "./styles/global.css";
 import Navbar from "./components/bars/navbar/Navbar";
-import Footer from "./components/footer/Footer";
 import ChatPage from "./pages/ChatPage";
 import { Routes, Route } from "react-router-dom";
 import LandingPage from "./pages/LandingPage";
 import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
-import AboutPage from "./pages/AboutPage";
 import LoginBar from "./components/bars/loginBar/LoginBar";
 import { AuthProvider } from "./api/AuthContext";
 import { UserProvider } from "./api/UserContext";
+import { ErrorProvider } from './components/popups/ErrorContext';
 
 
 function App() {
 
   return (
       <div>
+        <ErrorProvider>
         <UserProvider>
         <AuthProvider>
         <LoginBar />
@@ -28,6 +28,7 @@ function App() {
         </Routes>
         </AuthProvider>
         </UserProvider>
+        </ErrorProvider>
       </div>
   );
 }

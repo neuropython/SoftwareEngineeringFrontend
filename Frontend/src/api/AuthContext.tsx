@@ -4,6 +4,8 @@ import  loginClient from '../api/auth/login';
 import  registerClient from '../api/auth/register';
 import { useNavigate } from 'react-router-dom';
 import { UserContext } from './UserContext';
+import ErrorPopup from '../components/popups/ErrorPopup';
+import { useError } from '../components/popups/ErrorContext';
 
 
 interface AuthContextType {
@@ -21,6 +23,7 @@ type AuthProviderProps = {
 export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     const navigate = useNavigate();
     const UserInformation  = useContext(UserContext);
+    const { showError } = useError();
 
     useEffect(() => {
         const isAuth = localStorage.getItem('is_authenticated');
@@ -33,6 +36,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
     const login = async (username: string, password: string) => {
         const response = await loginClient(username, password);
+
         if (response.status === 200) {
           response.json()
           .then(data => {
@@ -42,7 +46,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
           UserInformation?.getUser();
           navigate('/');
         } else {
-          throw response;
+          showError(response.statusText);
         }
       };
 
@@ -52,14 +56,16 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     };
 
     const register = async (username: string, password: string, email: string) => {
-        const response = await registerClient(username, password, email);
-        if (response.status === 201) {
-          navigate('/login');
-        } else {
-          throw response;
-        }
-
-    }
+      const response = await registerClient(username, password, email);
+      console.log(response);
+      if (response.ok) {
+        navigate('/login');
+      } else {
+        const text = await response.text();
+        console.log(text);
+        showError(text);  
+      }
+  };
     return (
         <AuthContext.Provider value={{login, logout, register}}>
             {children}

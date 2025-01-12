@@ -6,8 +6,7 @@ import { useCallback, useMemo } from "react";
 import * as yup from "yup";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import registerClient from "../../api/auth/register";
-
+import { useAuth } from "../../api/AuthContext";
 
 type FormValues = {
   username: string;
@@ -27,6 +26,8 @@ function RegisterForm() {
 
   const { t } = useTranslation();
   const navigate = useNavigate();
+  const { register } = useAuth();
+
 
   const validationSchema = useMemo(
     () =>
@@ -49,23 +50,15 @@ function RegisterForm() {
   );
 
   const submit = useCallback(
-    (values: FormValues, formik: any) => {
-      registerClient(values.username, values.password, values.email).then(
-        (response) => {
-          if (response.ok) {
-            navigate("/login");
-          } else {
-            response.json().then((data) => {
-              formik.setErrors({ general: data.message });
-            });
-          }
+    async (values: FormValues, formik: any) => {
+        try {
+            await register(values.username, values.password, values.email);
+        } catch (error) {
+            console.error('Registration failed:', error);
         }
-      );
-      console.log(values);
     },
-
-    [navigate, t]
-  );
+    []
+);
 
   return (
     <Formik
