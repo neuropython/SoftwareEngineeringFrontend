@@ -12,10 +12,9 @@ const ENDPOINTS = {
     CHATS: {
         ROOM: BASE + `/chats/room`,
         MEDIA: BASE + `/chats/media`,
-        MSG_SUMMARY: BASE + `/chats/chat`,
     },
     AI: {
-        SUMMARY: BASE + `/summarize_chat`,
+        SUMMARY: BASE + `/chats/room/`,
     }
 };
 
