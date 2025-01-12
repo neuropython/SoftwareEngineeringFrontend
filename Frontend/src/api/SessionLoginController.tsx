@@ -6,7 +6,6 @@ import me from "./user/me";
 const SessionLoginController = () => {
     const { logout } = useAuth();
     const { showError } = useError();
-    
 
     useEffect(() => {
         const checkUserSession = async () => {
@@ -15,7 +14,6 @@ const SessionLoginController = () => {
                 if (response.status !== 200) {
                     logout();
                     showError('Session expired');
-                    
                 }
             } catch (error) {
                 console.error('Error during session check:', error);
@@ -24,12 +22,10 @@ const SessionLoginController = () => {
             }
         };
 
-        checkUserSession();
+        const intervalId = setInterval(checkUserSession, 60000); // Check every 60 seconds
 
-        const intervalId = setInterval(checkUserSession, 60000);
-
-        return () => clearInterval(intervalId);
-    }, [logout]);
+        return () => clearInterval(intervalId); // Cleanup interval on component unmount
+    }, [logout, showError]);
 
     return null;
 };
