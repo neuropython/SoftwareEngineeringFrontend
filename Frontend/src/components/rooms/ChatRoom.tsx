@@ -40,13 +40,15 @@ const ChatRoom: React.FC<ChatRoomProps> = ({ userLoggedId, conversation }) => {
          try {
           const data = event.data;
           const dataObj = JSON.parse(data);
-          const message: GetMessageDto = dataObj["data"];
-          setMessageData((prevMessages) => [...prevMessages, message]);
-          const seenMessage = `{"type": "SeenMessage", "data": {"messageId": "${message.id}"}}"`
-          const JsonSeenMessage = JSON.parse(seenMessage)
-          if (socket.current) {
-             socket.current.send(JsonSeenMessage)
-          }
+          if (dataObj["type"] === "TextMessage") {
+            const message: GetMessageDto = dataObj["data"];
+            setMessageData((prevMessages) => [...prevMessages, message]);
+            const JsonSeenMessage = `{"type":"SeenMessage","data":{"messageId":"${message.id}"}}`;
+            if (socket.current) {
+              console.log('Sending seen message:', JsonSeenMessage);
+              socket.current.send(JsonSeenMessage);
+            }
+        }  
 
         } catch (error) {
           console.error('Error parsing message:', error);
@@ -94,7 +96,7 @@ const ChatRoom: React.FC<ChatRoomProps> = ({ userLoggedId, conversation }) => {
     >
       <div style={{ flex: 1, overflow: "hidden"}}>
         <MessageListBar userId={userLoggedId} roomId={conversation.id}/>
-        <MessagesList userLoggedId={userLoggedId} messageData={messageData} />
+        <MessagesList userLoggedId={userLoggedId} messageData={messageData}  />
       </div>
       <div>
       <div className = "inputBar" style={{ padding: "10px" , width: "100%", alignItems: "center", justifyContent: "center", display: "flex"}}>
