@@ -9,6 +9,7 @@ import LoginBar from "./components/bars/loginBar/LoginBar";
 import { AuthProvider } from "./api/AuthContext";
 import { UserProvider } from "./api/UserContext";
 import { ErrorProvider } from './components/popups/ErrorContext';
+import SessionLoginController from './api/SessionLoginController';
 
 
 function App() {
@@ -18,6 +19,7 @@ function App() {
         <ErrorProvider>
         <UserProvider>
         <AuthProvider>
+        <SessionLoginController />
         <LoginBar />
         <Navbar />
         <Routes>
