@@ -6,6 +6,7 @@ import SearchIcon from '@mui/icons-material/Search';
 import HomeIcon from '@mui/icons-material/Home';
 import LogOutIcon from '@mui/icons-material/Logout';
 import GroupIcon from '@mui/icons-material/Group';
+import { useAuth } from '../../../api/AuthContext';
 
 import { useNavigate } from 'react-router-dom';
 
@@ -37,6 +38,7 @@ const NavButton: React.FC<NavButtonProps> = ({ text, icon, onClick, profilePictu
 const Navbar: React.FC = () => {
     const navigate = useNavigate();
     const isAuth = localStorage.getItem('is_authenticated');
+    const { logout } = useAuth();
 
 
 
@@ -58,11 +60,8 @@ const Navbar: React.FC = () => {
             <div className="navbar-right">
 
                 {isAuth == 'true' ? (
-                    <NavButton icon={<LogOutIcon />} onClick={() => {
-                        localStorage.setItem('is_authenticated', 'false');
-                        navigate('/');
-                        window.location.reload();
-                    }} />
+                    <NavButton icon={<LogOutIcon />} onClick={logout} 
+                    />
                 ) : null}
             </div>
         </nav>

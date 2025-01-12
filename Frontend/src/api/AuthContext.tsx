@@ -4,8 +4,7 @@ import  loginClient from '../api/auth/login';
 import  registerClient from '../api/auth/register';
 import { useNavigate } from 'react-router-dom';
 import { UserContext } from './UserContext';
-import ErrorPopup from '../components/popups/ErrorPopup';
-import { useError } from '../components/popups/ErrorContext';
+ import { useError } from '../components/popups/ErrorContext';
 
 
 interface AuthContextType {
@@ -51,8 +50,9 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       };
 
     const logout = () => {
-        localStorage.removeItem('is_authenticated');
+        localStorage.setItem('is_authenticated', 'false');
         UserInformation?.logoutUser();
+        navigate('/login');
     };
 
     const register = async (username: string, password: string, email: string) => {
