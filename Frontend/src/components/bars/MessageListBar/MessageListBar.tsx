@@ -1,4 +1,4 @@
-import React, { useState, useEffect, act } from "react";
+import React, { useState, useEffect } from "react";
 import { Button } from '@mui/material';
 import PersonAddIcon from '@mui/icons-material/PersonAdd';
 import RemoveCircleOutlineIcon from '@mui/icons-material/RemoveCircleOutline';
@@ -6,6 +6,7 @@ import addUserToRoom from "../../../api/chat/addUserToRoom";
 import deleteUserFromRoom from "../../../api/chat/deleteUserFromRoom";
 import room from "../../../api/chat/getRoom";
 import ExitToAppIcon from '@mui/icons-material/ExitToApp';
+import { useError } from '../../popups/ErrorContext';
 
 interface MessageListBarProps {
     roomId: string;
@@ -15,6 +16,9 @@ interface MessageListBarProps {
 async function isAdmin(roomId: string, userId: string): Promise<boolean> {
     const response = await room(roomId);
     const roomData = await response.json();
+    
+    
+
 
     const admin = roomData.members.find((member: any) => member.role === 'Admin');
     if (admin) {
@@ -26,8 +30,10 @@ async function isAdmin(roomId: string, userId: string): Promise<boolean> {
     }
 }
 
-const MessageListBar: React.FC<MessageListBarProps> = ({ roomId, userId }) => {
-        const [iAmAdmin, setIAmAdmin] = useState<boolean | null>(null);
+function MessageListBar({ roomId, userId }: MessageListBarProps) {
+    const [iAmAdmin, setIAmAdmin] = useState<boolean | null>(null);
+    const { showError } = useError();
+        
     
         useEffect(() => {
             const checkAdminStatus = async () => {
@@ -49,16 +55,23 @@ const MessageListBar: React.FC<MessageListBarProps> = ({ roomId, userId }) => {
     else {
         const handleUser = async (action: string) => {
             const userName = window.prompt("Enter the new user's name:");
+            console.log(`User name: ${userName}`);
             if (userName) {
                 let response;
                 switch (action) {
                     case "del":
                         response = await deleteUserFromRoom(userName, roomId);
-                        console.log(`User deleted: ${userName}`);
+
+                        showError(response.message); 
                         break;
+                         
                     case "add":
                         response = await addUserToRoom(userName, roomId);
-                        console.log(`New user added: ${userName}`);
+                        if (response.errors == null) {
+                            showError("User added successfully");
+                        } else {
+                            showError(response.errors[0].message);
+                        }
                         break;
                     default:
                         console.log(`Unknown action: ${action}`);

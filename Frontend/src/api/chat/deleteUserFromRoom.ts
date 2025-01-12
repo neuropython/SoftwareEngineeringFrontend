@@ -1,8 +1,8 @@
 import ENDPOINTS from "../endpoints";
 
-const deleteUserFromRoom = async (userToAddId: string, roomId: string) => {
+const deleteUserFromRoom = async (userToDeleteId: string, roomId: string) => {
     
-    const response = await fetch(ENDPOINTS.CHATS.ROOM + '/'+ roomId + '/users/' + userToAddId, {
+    const response = await fetch(ENDPOINTS.CHATS.ROOM + '/'+ roomId + '/users/' + userToDeleteId, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",

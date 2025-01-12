@@ -11,7 +11,7 @@ interface ErrorPopupProps {
 const ErrorPopup: React.FC<ErrorPopupProps> = ({ message, Open, onClose }) => {
   return (
     <Dialog open={Open} onClose={onClose} className='popup' sx={{ minWidth: '1000px' }}>
-      <DialogTitle>Error</DialogTitle>
+      <DialogTitle>Information</DialogTitle>
       <DialogContent>
         <p>{message}</p>
       </DialogContent>
