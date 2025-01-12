@@ -104,7 +104,7 @@ const ChatRoom: React.FC<ChatRoomProps> = ({ userLoggedId, conversation }) => {
       </div>
       <div>
       <div className = "inputBar" style={{ padding: "10px" , width: "100%", alignItems: "center", justifyContent: "center", display: "flex"}}>
-        <InputBar onSendMessage={addMessage} chatRoomMessages={messageData} />
+        <InputBar onSendMessage={addMessage} chatRoomMessages={messageData} chatRoomId={conversation.id}/>
         </div>
       </div>
     </div>

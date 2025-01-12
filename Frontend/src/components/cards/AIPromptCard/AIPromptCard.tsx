@@ -4,15 +4,16 @@ import {
   IconButton,
   Popover,
   Button,
-  TextField,
   List,
   ListItem,
   ListItemText,
   ListItemButton,
   Checkbox,
+  CircularProgress,
 } from "@mui/material";
 import { makeStyles } from "@mui/styles";
 import RobotIcon from "@mui/icons-material/Android";
+import getMessageSummary from "../../../api/ai/getSummary";
 
 interface Message {
   id: string; 
@@ -39,69 +40,69 @@ const useStyles = makeStyles({
 });
 
 interface AIPromptCardProps {
-  chatRoomMessages: Message[]; // Add this prop
-  // Other props if needed
+  chatRoomId: string;
+  chatRoomMessages: Message[];
 }
 
-const AIPromptCard: React.FC<AIPromptCardProps> = ({ chatRoomMessages }) => {
+const AIPromptCard: React.FC<AIPromptCardProps> = ({ chatRoomMessages, chatRoomId }) => {
   const classes = useStyles();
 
   const [anchorEl, setAnchorEl] = useState<Element | null>(null);
   const [messages, setMessages] = useState<Message[]>([]);
-  const [inputMessage, setInputMessage] = useState("");
   const [selectMode, setSelectMode] = useState(false);
   const [selectedMessages, setSelectedMessages] = useState<Message[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
 
-  const getLLMResponse = async (userMessage: string): Promise<string> => {
-    return new Promise((resolve) => {
-      setTimeout(() => {
-        resolve(`Response to: ${userMessage}`);
-      }, 1000);
-    });
+  const getLLMResponse = async (messeges: string[]): Promise<string> => {
+    const response = await getMessageSummary(chatRoomId, messeges);
+    if (!response.ok) {
+      throw new Error("Failed to fetch message summary");
+    }
+    const data = await response.json();
+    return data.summary;
   };
 
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
+    handleRetrieveMessages(); // Retrieve messages when the pop-up is opened
   };
 
   const handleClose = () => {
     setAnchorEl(null);
     setMessages([]);
-    setInputMessage("");
     setSelectMode(false);
     setSelectedMessages([]);
   };
 
   const handleSendMessage = async () => {
-    if (inputMessage.trim() === "") return;
-
-    const userMessage: Message = {
-      id: `user-${Date.now()}`,
-      content: inputMessage,
-      sender: "User",
-    };
-
-    setMessages((prevMessages) => [...prevMessages, userMessage]);
-
-    setInputMessage("");
-
-    let prompt = inputMessage;
     if (selectedMessages.length > 0) {
-      const selectedContent = selectedMessages
-        .map((msg) => `${msg.sender}: ${msg.content}`)
-        .join("\n");
-      prompt = `${selectedContent}\n\nUser: ${inputMessage}`;
+      const selectedMessageIds = selectedMessages.map((msg) => msg.id);
+
+      setIsLoading(true);
+
+      try {
+        const aiResponseContent = await getLLMResponse(selectedMessageIds);
+
+        const aiMessage: Message = {
+          id: `ai-${Date.now()}`,
+          content: aiResponseContent,
+          sender: "AI",
+        };
+
+        setMessages((prevMessages) => [...prevMessages, aiMessage]);
+
+        const storedMessages = JSON.parse(sessionStorage.getItem(`ai-responses-${chatRoomId}`) || "[]");
+        storedMessages.push(aiMessage);
+        sessionStorage.setItem(`ai-responses-${chatRoomId}`, JSON.stringify(storedMessages));
+
+        // Clear selected messages
+        setSelectedMessages([]);
+      } catch (error) {
+        console.error("Error fetching AI response:", error);
+      } finally {
+        setIsLoading(false);
+      }
     }
-
-    const aiResponseContent = await getLLMResponse(prompt);
-
-    const aiMessage: Message = {
-      id: `ai-${Date.now()}`,
-      content: aiResponseContent,
-      sender: "AI",
-    };
-
-    setMessages((prevMessages) => [...prevMessages, aiMessage]);
   };
 
   const handleSelectMessages = () => {
@@ -122,6 +123,12 @@ const AIPromptCard: React.FC<AIPromptCardProps> = ({ chatRoomMessages }) => {
 
   const handleDoneSelecting = () => {
     setSelectMode(false);
+    handleSendMessage();
+  };
+
+  const handleRetrieveMessages = () => {
+    const storedMessages = JSON.parse(sessionStorage.getItem(`ai-responses-${chatRoomId}`) || "[]");
+    setMessages(storedMessages);
   };
 
   const open = Boolean(anchorEl);
@@ -198,37 +205,16 @@ const AIPromptCard: React.FC<AIPromptCardProps> = ({ chatRoomMessages }) => {
                   </ListItem>
                 ))}
               </List>
-              <div className={classes.chatInput}>
-                <TextField
-                  className={classes.textField}
-                  variant="outlined"
-                  size="small"
-                  placeholder="Type your message..."
-                  value={inputMessage}
-                  onChange={(e) => setInputMessage(e.target.value)}
-                  onKeyPress={(e) => {
-                    if (e.key === "Enter") {
-                      e.preventDefault();
-                      handleSendMessage();
-                    }
-                  }}
-                />
-                <Button
-                  variant="contained"
-                  color="primary"
-                  onClick={handleSendMessage}
-                >
-                  Send
-                </Button>
-              </div>
               <Button
                 variant="text"
                 color="primary"
                 onClick={handleSelectMessages}
                 style={{ marginTop: "8px" }}
+                disabled={isLoading}
               >
                 Select Messages
               </Button>
+              {isLoading && <CircularProgress />}
             </>
           )}
         </div>
