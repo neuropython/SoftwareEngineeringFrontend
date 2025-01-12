@@ -2,7 +2,6 @@ import React, {useContext} from "react";
 import { Button } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import './LoginBar.css';
-import { AuthContext } from '../../../api/AuthContext';
 
 interface LoginButtonProps {
     text: string;
