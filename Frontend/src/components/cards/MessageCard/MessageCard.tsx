@@ -15,6 +15,8 @@ export default function MessageCard({
   isSentByUser
 }: MessageCardProps) {
   const [nicknames, setNicknames] = useState<string[]>([]);
+  const [isDeleted, setIsDeleted] = useState(false);
+
   
   useEffect(() => {
     const fetchNicknames = async () => {
@@ -52,11 +54,12 @@ export default function MessageCard({
 
   const DeleteMessage = () => {
     const JsonDeleteMessage = `{"type":"DeleteMessage","data":{"messageId":"${getMessageDto.id}"}}`;
-    const JsonParsed = JSON.parse(JsonDeleteMessage);
-    if (socket) {
+     if (socket) {
       console.log(socket);
       console.log('Delete message:', getMessageDto.id);
-      socket.send(JsonParsed);
+      socket.current.send(JsonDeleteMessage);
+      setIsDeleted(true);
+
     }
   }
 
@@ -65,7 +68,7 @@ export default function MessageCard({
       <div className="message-info">
         <span>{formattedDate}</span>
       </div>
-      <button className={`message-card ${isSentByUser ? "" : "mirrored"}`} onClick={DeleteMessage}> 
+      <button className={`message-card ${isSentByUser ? "" : "mirrored"} ${isDeleted ? "deleted" : ""}`} onClick={DeleteMessage}> 
         <h3>{getMessageDto.content}</h3>
       </button>
       <div className="nicknames">

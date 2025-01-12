@@ -49,3 +49,6 @@
   background-color: #909191;
 }
 
+.message-card.deleted {
+  background-color: #5976D2;
+}
