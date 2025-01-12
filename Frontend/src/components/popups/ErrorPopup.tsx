@@ -1,6 +1,6 @@
-// FILE: ErrorPopup.tsx
 import React from 'react';
 import { Dialog, DialogTitle, DialogContent, DialogActions, Button } from '@mui/material';
+import './ErrorPopup.css';
 
 interface ErrorPopupProps {
   message: string;
@@ -10,7 +10,7 @@ interface ErrorPopupProps {
 
 const ErrorPopup: React.FC<ErrorPopupProps> = ({ message, Open, onClose }) => {
   return (
-    <Dialog open={Open} onClose={onClose}>
+    <Dialog open={Open} onClose={onClose} className='popup' sx={{ minWidth: '1000px' }}>
       <DialogTitle>Error</DialogTitle>
       <DialogContent>
         <p>{message}</p>
