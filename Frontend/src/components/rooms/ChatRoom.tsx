@@ -34,6 +34,7 @@ const ChatRoom: React.FC<ChatRoomProps> = ({ userLoggedId, conversation }) => {
         console.log('Connecting to room:', chatRoomId);
         console.log('Socket:', socket.current);
       };
+      console.log('Socket:', socket.current);
       
 
       socket.current.onmessage = (event) => {
@@ -66,7 +67,9 @@ const ChatRoom: React.FC<ChatRoomProps> = ({ userLoggedId, conversation }) => {
     connectToRoom(conversation.id);
 
     return () => {
-      socket.current?.close();
+      if (socket.current) {
+        socket.current.close();
+      }
       setMessageData([]);
 
     };
@@ -89,6 +92,7 @@ const ChatRoom: React.FC<ChatRoomProps> = ({ userLoggedId, conversation }) => {
     }
   };
 
+
   return (
     <div
       className="chat-room"
@@ -96,7 +100,7 @@ const ChatRoom: React.FC<ChatRoomProps> = ({ userLoggedId, conversation }) => {
     >
       <div style={{ flex: 1, overflow: "hidden"}}>
         <MessageListBar userId={userLoggedId} roomId={conversation.id}/>
-        <MessagesList userLoggedId={userLoggedId} messageData={messageData}  />
+        <MessagesList userLoggedId={userLoggedId} messageData={messageData} socket={socket.current} />
       </div>
       <div>
       <div className = "inputBar" style={{ padding: "10px" , width: "100%", alignItems: "center", justifyContent: "center", display: "flex"}}>

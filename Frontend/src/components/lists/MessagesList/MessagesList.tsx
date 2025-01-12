@@ -8,11 +8,13 @@ import { VariableSizeList } from "react-window";
 interface MessagesListProps {
   userLoggedId: string;
   messageData: GetMessageDto[];
+  socket: any;
 }
 
 const MessagesList: React.FC<MessagesListProps> = ({
   userLoggedId,
   messageData,
+  socket,
 }) => {
 
   const getItemSize = (index: number) => {
@@ -50,6 +52,7 @@ const MessagesList: React.FC<MessagesListProps> = ({
           <MessageCard
             getMessageDto={messageItem}
             isSentByUser={isSentByUser}
+            socket={socket}
           />
         </div>
       );

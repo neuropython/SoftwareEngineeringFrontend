@@ -6,10 +6,12 @@ import getUserById from "../../../api/user/getUserById";
 interface MessageCardProps {
   getMessageDto: GetMessageDto;
   isSentByUser: boolean;
+  socket: any;
 }
 
 export default function MessageCard({
   getMessageDto,
+  socket,
   isSentByUser
 }: MessageCardProps) {
   const [nicknames, setNicknames] = useState<string[]>([]);
@@ -48,14 +50,24 @@ export default function MessageCard({
     minute: "2-digit",
   });
 
+  const DeleteMessage = () => {
+    const JsonDeleteMessage = `{"type":"DeleteMessage","data":{"messageId":"${getMessageDto.id}"}}`;
+    const JsonParsed = JSON.parse(JsonDeleteMessage);
+    if (socket) {
+      console.log(socket);
+      console.log('Delete message:', getMessageDto.id);
+      socket.send(JsonParsed);
+    }
+  }
+
   return (
     <>
       <div className="message-info">
         <span>{formattedDate}</span>
       </div>
-      <div className={`message-card ${isSentByUser ? "" : "mirrored"}`}>
+      <button className={`message-card ${isSentByUser ? "" : "mirrored"}`} onClick={DeleteMessage}> 
         <h3>{getMessageDto.content}</h3>
-      </div>
+      </button>
       <div className="nicknames">
         {nicknames.map((nickname, index) => (
           <span key={index}>{nickname}</span>
