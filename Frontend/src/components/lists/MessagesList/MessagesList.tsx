@@ -1,6 +1,5 @@
 // FILE: MessagesList.tsx
 import React, { useCallback } from "react";
-import { FixedSizeList as List } from "react-window";
 import { GetMessageDto } from "../../../dto/MessageDto";
 import MessageCard from "../../cards/MessageCard/MessageCard";
 import AutoSizer from "react-virtualized-auto-sizer";
@@ -52,6 +51,7 @@ const MessagesList: React.FC<MessagesListProps> = ({
         >
           <MessageCard
             getMessageDto={messageItem}
+            isSentByUser={isSentByUser}
             className={isSentByUser ? "" : "mirrored"}
           />
         </div>
