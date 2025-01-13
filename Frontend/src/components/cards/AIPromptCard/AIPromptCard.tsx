@@ -131,6 +131,10 @@ const AIPromptCard: React.FC<AIPromptCardProps> = ({ chatRoomMessages, chatRoomI
     setMessages(storedMessages);
   };
 
+  const handleSelectAllMessages = () => {
+    setSelectedMessages(chatRoomMessages);
+  };
+
   const open = Boolean(anchorEl);
   const id = open ? "ai-prompt-popover" : undefined;
 
@@ -182,6 +186,14 @@ const AIPromptCard: React.FC<AIPromptCardProps> = ({ chatRoomMessages, chatRoomI
                   </ListItem>
                 ))}
               </List>
+              <Button
+                variant="contained"
+                color="primary"
+                onClick={handleSelectAllMessages}
+                style={{ marginRight: "8px" }}
+              >
+                Select All
+              </Button>
               <Button
                 variant="contained"
                 color="primary"
