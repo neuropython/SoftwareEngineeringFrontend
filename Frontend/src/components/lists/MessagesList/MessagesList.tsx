@@ -17,19 +17,17 @@ const MessagesList: React.FC<MessagesListProps> = ({
   socket,
 }) => {
 
-  const getItemSize = (index: number) => {
+  const getItemSize = (index: number): number => {
     const messageItem: GetMessageDto = messageData[index];
     const numberOfLines = Math.ceil(messageItem.content.length / 50);
-    if (userLoggedId === messageItem.sentBy) {
-      if (numberOfLines == 1) return 50;
-      return 20 * (numberOfLines -1) + 50;
+    const baseSize = userLoggedId === messageItem.sentBy ? 50 : 75;
+
+    if (numberOfLines === 1) {
+        return baseSize;
     }
 
-    else {if (numberOfLines == 1) return 75;
-    return 20 * (numberOfLines -1) + 75};
-
-    
-  }
+    return 20 * (numberOfLines - 1) + baseSize;
+};
   // Row component for react-window
   const Row = useCallback(
     ({ index, style }: { index: number; style: React.CSSProperties }) => {
