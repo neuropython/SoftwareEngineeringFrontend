@@ -65,20 +65,20 @@ export default function MessageCard({
 
   return (
     <>
-    <div className = {`message-card-container ${isSentByUser ? "sent" : "received"}`}>
-      <div className="message-info">
-        <span>{formattedDate}</span>
+      <div className={`message-card-container ${isSentByUser ? "sent" : "received"}`}>
+        <div className="message-info">
+          <span>{formattedDate}</span>
+        </div>
+        {isSentByUser ? (
+          <button className={`message-card ${isDeleted ? "deleted" : ""}`} onClick={DeleteMessage}>
+            <h3>{getMessageDto.content}</h3>
+          </button>
+        ) : (
+          <div className={`message-card mirrored`}>
+            <h3>{getMessageDto.content}</h3>
+          </div>
+        )}
       </div>
-{isSentByUser ? (
-  <button className={`message-card ${isDeleted ? "deleted" : ""}`} onClick={DeleteMessage}>
-    <h3>{getMessageDto.content}</h3>
-  </button>
-) : (
-  <div className={`message-card mirrored`}>
-    <h3>{getMessageDto.content}</h3>
-  </div>
-)}
-</div>
       <div className="nicknames">
         {nicknames.map((nickname, index) => (
           <span key={index}>{nickname}</span>

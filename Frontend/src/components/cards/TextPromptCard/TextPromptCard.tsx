@@ -43,7 +43,9 @@ const TextPromptCard: React.FC<TextPromptCardProps> = ({ onSendMessage }) => {
   const [isDragOver, setIsDragOver] = useState<boolean>(false);
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setInputValue(event.target.value);
+    if (event.target.value.length <= 200) {
+      setInputValue(event.target.value);
+    }
   };
 
   const handleSendMessage = () => {
@@ -116,6 +118,7 @@ const TextPromptCard: React.FC<TextPromptCardProps> = ({ onSendMessage }) => {
           }}
           fullWidth
           multiline
+          inputProps={{ maxLength: 200 }}
         />
         <IconButton onClick={handleSendMessage}>
           <SendIcon />

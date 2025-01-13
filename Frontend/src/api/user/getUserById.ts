@@ -2,7 +2,7 @@ import ENDPOINTS from "../endpoints";
 
 const getUserById = async (userId: string) => {
   try {
-    const response = await fetch(`${ENDPOINTS.CHATS.ROOM}${userId}`, {
+    const response = await fetch(`${ENDPOINTS.USERS.USERBYID}${userId}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
