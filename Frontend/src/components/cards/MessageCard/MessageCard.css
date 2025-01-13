@@ -46,9 +46,20 @@
 
 .message-card.mirrored {
   border-radius: 0px 30px 30px 0px;
-  background-color: #909191;
-}
+  background-color: #909191;}
 
 .message-card.deleted {
   background-color: #5976D2;
+}
+
+.message-card-container{
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  margin: 5px;
+}
+
+.message-card-container.sent {
+  flex-direction: row-reverse;
 }
