@@ -68,9 +68,15 @@ export default function MessageCard({
       <div className="message-info">
         <span>{formattedDate}</span>
       </div>
-      <button className={`message-card ${isSentByUser ? "" : "mirrored"} ${isDeleted ? "deleted" : ""}`} onClick={DeleteMessage}> 
-        <h3>{getMessageDto.content}</h3>
-      </button>
+{isSentByUser ? (
+  <button className={`message-card ${isDeleted ? "deleted" : ""}`} onClick={DeleteMessage}>
+    <h3>{getMessageDto.content}</h3>
+  </button>
+) : (
+  <div className={`message-card mirrored`}>
+    <h3>{getMessageDto.content}</h3>
+  </div>
+)}
       <div className="nicknames">
         {nicknames.map((nickname, index) => (
           <span key={index}>{nickname}</span>
