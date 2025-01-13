@@ -6,23 +6,18 @@ import logo from '../assets/LogoCalmSpectrum.svg';
 
 const featuresData = [
     {
-        title: "Mood Tracking",
-        description: "Track your mood and emotions to understand how you feel over time.",
+        title: "Analize messages via AI",
+        description: "Our AI will help you understand others and yourself better.",
         image: "https://via.placeholder.com/150"
     },
     {
-        title: "Journaling",
-        description: "Write about your day and reflect on your thoughts and feelings.",
+        title: "Message your friends",
+        description: "Chat with your friends and family to stay connected.",
         image: "https://via.placeholder.com/150"
     },
     {
-        title: "Meditation",
-        description: "Practice mindfulness and meditation to help reduce stress and anxiety.",
-        image: "https://via.placeholder.com/150"
-    },
-    {
-        title: "Community",
-        description: "Connect with others who are going through similar experiences.",
+        title: "Create groups",
+        description: "Create groups to chat with multiple people at once.",
         image: "https://via.placeholder.com/150"
     }
 ];
@@ -53,7 +48,7 @@ const LandingPage: React.FC = () => {
             <div className="landing-page-header-text">
                 <img src={logo} alt="logo" className='logo' />
                 <h1 className="fancy-font">Calm Spectrum</h1>
-                <h2 className="landing-page-subheader">Your mental health companion</h2>
+                <h2 className="landing-page-subheader">AI can help you understand your frieds better</h2>
             </div>          
         </div>
             <Features features={featuresData} />

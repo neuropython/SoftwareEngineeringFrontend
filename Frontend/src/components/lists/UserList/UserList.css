@@ -1,22 +1,40 @@
 .user-list {
-    display: flex;
-    flex-direction: row;
-    list-style-type: none;
-    padding: 0;
-    margin: 0;
-    overflow-x: auto; /* Enable horizontal scrolling if needed */
-  }
-  
-  .user-list li {
-    flex: 1 0 150px; /* Ensure all items have the same width */
-    margin: 0 10px;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    box-sizing: border-box; /* Include padding and border in the element's total width and height */
-  }
-  
-  .user-list-container {
-    max-height: 200px; /* Set a max height for the container */
-    overflow-y: auto; /* Enable vertical scrolling if needed */
-  }
+  display: flex;
+  flex-direction: row;
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  overflow-x: auto; /* Enable horizontal scrolling */
+}
+
+.user-list li {
+  flex: 0 0 70%; /* Each item takes 70% of the screen width */
+  margin: 0 10px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box; /* Include padding and border in the element's total width and height */
+}
+
+/* Custom scrollbar styles */
+.user-list-container {
+  overflow-y: hidden; /* Disable vertical scrolling */
+}
+
+.user-list::-webkit-scrollbar {
+  height: 8px; /* Height of the horizontal scrollbar */
+}
+
+.user-list::-webkit-scrollbar-track {
+  background: #f1f1f1; /* Background of the scrollbar track */
+  border-radius: 4px;
+}
+
+.user-list::-webkit-scrollbar-thumb {
+  background: #888; /* Color of the scrollbar thumb */
+  border-radius: 4px;
+}
+
+.user-list::-webkit-scrollbar-thumb:hover {
+  background: #555; /* Color of the scrollbar thumb on hover */
+}

@@ -6,6 +6,7 @@ import { SendMessageDto } from "../../dto/MessageDto";
 import MessagesList from "../lists/MessagesList/MessagesList";
 import InputBar from "../bars/InputBar/InputBar";
 import MessageListBar from "../bars/MessageListBar/MessageListBar"
+import UserList from "../lists/UserList/UserList";
 
 interface ChatRoomProps {
   userLoggedId: string;
@@ -61,6 +62,7 @@ const ChatRoom: React.FC<ChatRoomProps> = ({ userLoggedId, conversation }) => {
       };
 
       socket.current.onclose = () => {
+        console.log('Disconnecting from room:', chatRoomId);
         console.log('WebSocket connection closed');
       };
     };
@@ -70,6 +72,7 @@ const ChatRoom: React.FC<ChatRoomProps> = ({ userLoggedId, conversation }) => {
       if (socket.current) {
         socket.current.close();
       }
+      console.log('Closing WebSocket connection');
       setMessageData([]);
 
     };
@@ -100,12 +103,14 @@ const ChatRoom: React.FC<ChatRoomProps> = ({ userLoggedId, conversation }) => {
     >
       <div style={{ flex: 1, overflow: "hidden"}}>
         <MessageListBar userId={userLoggedId} roomId={conversation.id}/>
-        <MessagesList userLoggedId={userLoggedId} messageData={messageData} socket={socket.current} />
+        <MessagesList userLoggedId={userLoggedId} messageData={messageData} socket={socket} />
       </div>
       <div>
       <div className = "inputBar" style={{ padding: "10px" , width: "100%", alignItems: "center", justifyContent: "center", display: "flex"}}>
         <InputBar onSendMessage={addMessage} chatRoomMessages={messageData} chatRoomId={conversation.id}/>
         </div>
+        <UserList roomId={conversation.id} />
+
       </div>
     </div>
   );

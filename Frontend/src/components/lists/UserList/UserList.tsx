@@ -38,8 +38,8 @@ const UserList: React.FC<UserListProps> = ({ roomId }) => {
       <ul className="user-list">
         {users.map((user) => (
           <li key={user.id}>
-            {user.username} (ID: {user.id})
-          </li>
+{user.username ? user.username : "me"} (ID: {user.id})          
+</li>
         ))}
       </ul>
     </div>

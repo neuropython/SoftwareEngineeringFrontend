@@ -48,10 +48,6 @@ function MessageListBar({ roomId, userId }: MessageListBarProps) {
         return null;
     }
 
-    if (!iAmAdmin) {
-        return null;
-    }
-
     else {
         const handleUser = async (action: string) => {
             const userName = window.prompt("Enter the new user's name:");
@@ -82,12 +78,12 @@ function MessageListBar({ roomId, userId }: MessageListBarProps) {
 
         const leftGroup = async () => {
             const response = await deleteUserFromRoom(userId, roomId)
-            if (response.success) {
-                window.location.reload();
-        } else {
-            console.log('You have left group')
-        }
+            window.location.reload();
     };
+
+    if (!iAmAdmin) {
+        return null;
+    }
     
         return (
             <nav className="messageListBar">

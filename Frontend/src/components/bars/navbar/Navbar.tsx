@@ -38,6 +38,7 @@ const NavButton: React.FC<NavButtonProps> = ({ text, icon, onClick, profilePictu
 const Navbar: React.FC = () => {
     const navigate = useNavigate();
     const isAuth = localStorage.getItem('is_authenticated');
+    const userId = localStorage.getItem('userId');
     const { logout } = useAuth();
 
 
@@ -53,11 +54,11 @@ const Navbar: React.FC = () => {
                 
                 <NavButton  icon={<HomeIcon />} onClick={() => navigate('/')} />
             </div>
-            <div  className="navbar-center">
-                <Input placeholder="Search..." className="search-bar" />
-                <NavButton  icon={<SearchIcon />} onClick={() => console.log('Search')} />
-            </div>
             <div className="navbar-right">
+                {isAuth == 'true' ? (
+                    userId ? (
+                        `My Id: ${userId}`
+                    ) : ( '' )) : null}
 
                 {isAuth == 'true' ? (
                     <NavButton icon={<LogOutIcon />} onClick={logout} 
