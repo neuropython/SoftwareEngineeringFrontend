@@ -7,7 +7,7 @@ export class CreateMessageDto {
   chatRoomId: string = "";
   sentById: string = "";
   sentAt: string = ""; // timestamp
-  seenById: string[] = [];
+  seenBy: string[] = [];
 }
 
 
@@ -18,7 +18,7 @@ export class GetMessageDto {
   chatRoomId: string = "";
   sentBy: string = "";
   sentAt: string = ""; // timestamp
-  seenById: string[] = [];
+  seenBy: string[] = [];
 
   constructor(
     id: string = "",
@@ -35,7 +35,7 @@ export class GetMessageDto {
     this.chatRoomId = chatRoomId;
     this.sentBy = sentById;
     this.sentAt = sentAt;
-    this.seenById = seenById;
+    this.seenBy = seenById;
   }
 }
 

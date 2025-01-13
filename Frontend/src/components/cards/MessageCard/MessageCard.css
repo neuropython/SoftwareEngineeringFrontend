@@ -1,11 +1,11 @@
 .message-card {
-  display: block;
+  display: flex; /* Ensure flex display */
   border-radius: 30px 0px 0px 30px;
   padding: 18px;
   margin: 17px 0;
   background-color: #1976D2;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  flex-direction: column;
+  flex-direction: row;
   max-width: 50%;
   min-width: 60px;
   overflow: hidden;
@@ -18,8 +18,9 @@
 
 .message-info {
   display: flex;
+  flex-direction: column;
   justify-content: flex-start;
-  margin-bottom: 5px;
+  margin-top: 5px; 
   font-size: 10px;
   color: #555;
 }
@@ -46,20 +47,34 @@
 
 .message-card.mirrored {
   border-radius: 0px 30px 30px 0px;
-  background-color: #909191;}
+  background-color: #909191;
+}
 
 .message-card.deleted {
   background-color: #5976D2;
 }
 
-.message-card-container{
+.message-card-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  margin: 5px;
+  padding: 18px;
+}
+
+.message-card-wrapper {
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
   align-items: center;
-  margin: 5px;
+  width: 100%;
+}
+
+.message-card-wrapper.sent {
+  flex-direction: row-reverse;
 }
 
 .message-card-container.sent {
-  flex-direction: row-reverse;
+  align-items: flex-end;
 }
