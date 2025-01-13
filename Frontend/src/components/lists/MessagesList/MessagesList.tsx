@@ -20,13 +20,8 @@ const MessagesList: React.FC<MessagesListProps> = ({
   const getItemSize = (index: number): number => {
     const messageItem: GetMessageDto = messageData[index];
     const numberOfLines = Math.ceil(messageItem.content.length / 50);
-    const baseSize = userLoggedId === messageItem.sentBy ? 50 : 75;
-
-    if (numberOfLines === 1) {
-        return baseSize;
-    }
-
-    return 20 * (numberOfLines - 1) + baseSize;
+    const baseSize = 70;
+    return baseSize + numberOfLines * 20;
 };
   // Row component for react-window
   const Row = useCallback(

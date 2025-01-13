@@ -3,22 +3,25 @@ import React, { useState, useEffect } from 'react';
 import LandingPageCarousel from '../components/landing-page-components/LandingPageCarousel';
 import Features from '../components/feature/Feature';
 import logo from '../assets/LogoCalmSpectrum.svg';
+import message from '../assets/message.png';
+import rooms from '../assets/rooms.png';
+import Ai from '../assets/Ai.png';
 
 const featuresData = [
     {
         title: "Analize messages via AI",
         description: "Our AI will help you understand others and yourself better.",
-        image: "https://via.placeholder.com/150"
+        image: Ai
     },
     {
         title: "Message your friends",
         description: "Chat with your friends and family to stay connected.",
-        image: "https://via.placeholder.com/150"
+        image: message
     },
     {
         title: "Create groups",
         description: "Create groups to chat with multiple people at once.",
-        image: "https://via.placeholder.com/150"
+        image: rooms
     }
 ];
 
@@ -40,15 +43,10 @@ const LandingPage: React.FC = () => {
     return (
         <div className="landing-page">
         <div className="landing-page-intro">
-            {!isSmallScreen && (
-                <div className="landing-page-carousel">
-                    <LandingPageCarousel images={["https://via.placeholder.com/750", "https://via.placeholder.com/750", "https://via.placeholder.com/750"]} />
-                </div>
-            )}
             <div className="landing-page-header-text">
                 <img src={logo} alt="logo" className='logo' />
                 <h1 className="fancy-font">Calm Spectrum</h1>
-                <h2 className="landing-page-subheader">AI can help you understand your frieds better</h2>
+                <h2 className="landing-page-subheader">AI can help you understand your friends better</h2>
             </div>          
         </div>
             <Features features={featuresData} />

@@ -1,10 +1,11 @@
 // AuthContext.tsx
 import React, { createContext, useState, useContext, useEffect, ReactNode } from 'react';
+import me from '../api/user/me';
 import  loginClient from '../api/auth/login';
 import  registerClient from '../api/auth/register';
 import { useNavigate } from 'react-router-dom';
 import { UserContext } from './UserContext';
- import { useError } from '../components/popups/ErrorContext';
+import { useError } from '../components/popups/ErrorContext';
 
 
 interface AuthContextType {
@@ -39,10 +40,14 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         if (response.status === 200) {
           response.json()
           .then(data => {
-            localStorage.setItem('accessToken', data.accessToken);
+             localStorage.setItem('accessToken', data.accessToken);
+            localStorage.setItem('userId', data.user.id);
+            localStorage.setItem('userName', data.user.username);
+            localStorage.setItem('userEmail', data.user.email);
           });
           localStorage.setItem('is_authenticated', 'true');
-          UserInformation?.getUser();
+           
+
           navigate('/');
         } else {
           showError(response.statusText);
